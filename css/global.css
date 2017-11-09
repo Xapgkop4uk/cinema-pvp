@@ -1,4 +1,33 @@
-#Welcome{
-  padding: 20;
-  color: rgba(255, 0, 0, 0.5);
+body, html {
+    padding : 0px;
+    margin : 0px;
+    height : 100%;
+    font-family: monospace;
+}
+nav{
+    position: relative;
+    height: 60px;
+    background-color: rgb(173, 24, 123, 0.8);
+}
+#menu-login{
+  position: absolute;
+  top: 15px;
+  right: 10px; /* Should be half of font-size */
+  font-size: 20px;
+  margin-right: 100px;
+  text-align: right;
+}
+#menu{
+  position: absolute;
+  top: 15px;
+  left: 10px;
+  margin-left: 100px;
+  font-size: 20px;
+  text-align: left;
+}
+span {
+  padding: 20px;
+  font-size: 20px;
+  vertical-align: middle;
+  color: white;
 }
