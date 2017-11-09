@@ -7,7 +7,7 @@ body, html {
 nav{
     position: relative;
     height: 60px;
-    background-color: rgb(173, 24, 123, 0.8);
+    background-color: rgb(34, 92, 130, 0.8);
 }
 #menu-login{
   position: absolute;
@@ -30,4 +30,8 @@ span {
   font-size: 20px;
   vertical-align: middle;
   color: white;
+}
+#Movies-scroller{
+  padding: 50px;
+  margin: 200px;
 }
