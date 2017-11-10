@@ -9,12 +9,23 @@ nav{
     height: 60px;
     background-color: rgb(34, 92, 130, 0.8);
 }
+
+form {
+  position: relative;
+}
 #menu-login{
   position: absolute;
   top: 15px;
-  right: 10px; /* Should be half of font-size */
+  right: 10px;
   font-size: 20px;
   margin-right: 100px;
+  text-align: right;
+}
+#registration{
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  font-size: 20px;
   text-align: right;
 }
 #menu{
@@ -25,13 +36,206 @@ nav{
   font-size: 20px;
   text-align: left;
 }
-span {
+span.span-menu{
   padding: 20px;
   font-size: 20px;
   vertical-align: middle;
   color: white;
+  cursor: pointer;
 }
-#Movies-scroller{
+span:hover.span-menu{
+  background-color: rgb(34, 92, 90, 0.8);
+}
+#form-login{
+  position: relative;
+  margin: 50px;
+  margin-left: 35%;
+  margin-right: 35%;
+  color: white;
+  background-color: rgb(34, 92, 130, 0.8);
+}
+
+#form-login #select-intro{
+  top: 100px;
+  margin: 20px;
+}
+#Content{
+  position: relative;
   padding: 50px;
-  margin: 200px;
+  margin-left: 200px;
+  margin-right: 200px;
+}
+
+#sign-up, #registration{
+  padding: 0px;
+  margin : 0px;
+  top: 0px;
+  width: 50%;
+  height: 60px;
+  text-align: center;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#sign-up{
+  left: 0px
+}
+
+#registration{
+  left: 50%;
+}
+
+.span-select-login, .span-select-registration{
+  position:absolute;
+  top:20px;
+  padding:0px;
+}
+
+.span-select-login{
+  left:20%;
+}
+
+.span-select-registration{
+  right:20%;
+}
+
+
+.group{
+  position: relative;
+  margin-bottom: 30px;
+}
+
+input{
+  font-size: 18px;
+  color: white;
+  padding-top: 15px;
+  padding-bottom:: 15px;
+  display: block;
+  width: 100%;
+  right: 10%;
+  left: 10%;
+  border: none;
+  border-bottom: 1px solid white;
+  background-color: rgb(0, 0, 0, 0);
+}
+input:focus{
+  outline: none;
+}
+label{
+  color:white;
+  font-size: 18px;
+  position: absolute;
+  pointer-events: none;
+  left: 10px;
+  top: 15px;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+input:focus ~ label, input:valid ~ label {
+  top: -15px;
+  font-size: 14px;
+  color: white;
+}
+
+.bar{
+  position: relative;
+  display: block;
+  width: calc(100% + 5px);
+}
+.bar:before, .bar:after{
+  content: "";
+  height: 2px;
+  width: 0;
+  bottom: 0;
+  position: absolute;
+  background: grey;
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+.bar:before{
+  left:50%;
+}
+
+.bar:after{
+  right:50%;
+}
+input:focus ~.bar:before,
+input:focus ~.bar:after{
+  width: 50%;
+}
+
+.container{
+  position: relative;
+  display: block;
+  background: rgb(0, 0, 0, 0);
+  padding: 50px 50px;
+}
+
+.btn {
+  position: relative;
+
+  padding: 0;
+
+  overflow: hidden;
+  right: 0px;
+  border-width: 0;
+  outline: none;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+
+  background-color: white;
+  color: rgb(34, 92, 130, 0.8);
+
+  transition: background-color .3s;
+}
+
+.btn-submit{
+  position: absolute;
+  right: 0px;
+}
+
+.btn:hover, .btn:focus {
+  background-color: silver;
+}
+
+.btn > * {
+  position: relative;
+}
+
+.btn span {
+  display: block;
+  padding: 12px 24px;
+}
+
+.btn:before {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  display: block;
+  width: 0;
+  padding-top: 0;
+
+  border-radius: 100%;
+
+  background-color: rgba(236, 240, 241, .3);
+
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.btn:active:before {
+  width: 120%;
+  padding-top: 120%;
+
+  transition: width .2s ease-out, padding-top .2s ease-out;
 }
