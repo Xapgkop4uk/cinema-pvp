@@ -103,12 +103,13 @@
             .append($('<span class="bar">'))
             .append($('<label>')
               .html('Повторите пароль')))
-          .append($('<button class="btn btn-submit" type="button">')
+          .append($('<button class="btn btn-submit" type="button" onclick="userRegistration(this.form)">')
             .append($('<span>')
               .html('Регистрация')));
 
       $('#form-login > .container').append(container);
     };
+
   </script>
 </body>
 </html>
