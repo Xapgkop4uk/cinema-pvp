@@ -1,40 +1,115 @@
 var APP_ID = 'F4938450-8412-F432-FF30-7FF933EE1300';
-var API_KEY = '0F451544-AEB6-6493-FFEA-731A9DDDA700';
+var API_KEY = '9D5C7C66-9B9D-35B7-FF7F-5EB8144C5C00';
+var COOKIE_LIVE = 1000000;
 
 Backendless.serverURL = 'https://api.backendless.com';
 Backendless.initApp(APP_ID, API_KEY);
 
 function userRegistration(form){
-    var name = form.name.value;
-    var surname = form.surname.value;
-    var login = form.login.value;
-    var password = form.password.value;
 
-    var menuId = $("ul.nav").first().attr("id");
+    var user ={
+      email:form.email.value,
+      login:form.login.value,
+      password:form.password.value
+    };
+
     var request = $.ajax({
-      url: "script.php",
+      url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/users/register",
+      contentType:"application/json",
       type: "POST",
-      data: {id : menuId},
-      dataType: "html"
+      dataType: "json",
+      data: JSON.stringify(user),
+      beforeSend: function(xhr){
+        xhr.setRequestHeader('user-token', getCookie('userId'))
+      },
+      success: function(d){
+        setCookie('username', d.login, COOKIE_LIVE);
+        setCookie('userId', d.objectId, COOKIE_LIVE);
+        console.log(d);
+        drawMainPage();
+      }
     });
+};
 
-    request.done(function(msg) {
-      $("#log").html( msg );
-    });
+function userLogin(form){
 
-    request.fail(function(jqXHR, textStatus) {
-      alert( "Request failed: " + textStatus );
-    });
+  var user ={
+    login:form.login.value,
+    password:form.password.value
+  };
 
-
-});
-
-    var request = new XMLHttpRequest();
-    request.setRequestHeader('Content-Type','application/json');
-
-    request.onreadystatechange = function(){
-
+  var request = $.ajax({
+    url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/users/login",
+    contentType:"application/json",
+    type: "POST",
+    dataType: "json",
+    data: JSON.stringify(user),
+    success: function(d){
+      setCookie('username', d.login, COOKIE_LIVE);
+      setCookie('userId', d.objectId, COOKIE_LIVE);
+      console.log(document.cookie);
+      drawMainPage();
     }
+  });
+};
 
-    alert(name+" "+surname+" "+login+" "+ password);
+function userLogout(){
+
+  var request = $.ajax({
+    url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/users/logout",
+    type: "GET",
+    dataType: "json",
+    beforeSend: function(xhr){
+      xhr.setRequestHeader('user-token', getCookie('userId'));
+    },
+    success: function(d){
+      deleteCookie('username');
+      deleteCookie('userId');
+      console.log(d);
+      drawMainPage();
+    }
+  });
+
+};
+
+function getCookie(name) {
+  var matches = document.cookie.match(new RegExp(
+    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+  ));
+  return matches ? decodeURIComponent(matches[1]) : undefined;
+};
+
+function setCookie(name, value, options) {
+  options = options || {};
+
+  var expires = options.expires;
+
+  if (typeof expires == "number" && expires) {
+    var d = new Date();
+    d.setTime(d.getTime() + expires * 1000);
+    expires = options.expires = d;
+  }
+  if (expires && expires.toUTCString) {
+    options.expires = expires.toUTCString();
+  }
+
+  value = encodeURIComponent(value);
+
+  var updatedCookie = name + "=" + value;
+
+  for (var propName in options) {
+    updatedCookie += "; " + propName;
+    var propValue = options[propName];
+    if (propValue !== true) {
+      updatedCookie += "=" + propValue;
+    }
+  }
+
+  document.cookie = updatedCookie;
+};
+
+function deleteCookie(name) {
+  setCookie(name, "", {
+    expires: -1
+  })
 }
