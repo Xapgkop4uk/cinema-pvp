@@ -1,0 +1,12 @@
+table{
+  width: 80%;
+}
+th,td {
+  border-bottom: 1px solid black;
+}
+  thead,
+  >body,
+  >tfoot{
+    border-bottom: 1px solid black;
+  }
+}

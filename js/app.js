@@ -72,6 +72,35 @@ function userLogout(){
 
 };
 
+function addSession(form){
+
+  var date = Date.parse(form.date.value+" "+form.time.value);
+  console.log(date);
+  if(isNaN(date)){
+    showModalInfo('Неверные параметры даты или времени.<br/>Используйте следующий формат "13/11/17 11:00".');
+    return;
+  }
+
+  var json ={
+    movie:form.movie.value,
+    time:date,
+    price:form.price.value
+  };
+
+  $.ajax({
+    url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/session",
+    contentType:"application/json",
+    type: "POST",
+    dataType: "json",
+    data: JSON.stringify(json),
+    success: function(d){
+      console.log(d);
+      showModalInfo("Сеанс успешно добавлен на сервер!");
+    }
+  });
+
+}
+
 function getCookie(name) {
   var matches = document.cookie.match(new RegExp(
     "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"

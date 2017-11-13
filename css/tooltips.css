@@ -1,0 +1,29 @@
+.tooltip-admin {
+  display: inline;
+  position: relative;
+}
+
+.tooltip-admin:hover:after{
+	background: #1a1f23;
+	background: rgba(0,0,0,.8);
+	border-radius: 5px;
+	color: white;
+	content: attr(text);
+	left: -110px;
+  top:26px;
+	padding: 5px 15px;
+	position: absolute;
+  z-index: 98;
+  width: 220px;
+}
+
+.tooltip-admin:hover:before{
+
+  border: 10px solid transparent;
+  border-bottom: 10px solid rgba(0,0,0,.8);
+	top: 20px;
+  left:2px;
+	content: "";
+	position: absolute;
+	z-index: 99;
+}

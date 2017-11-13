@@ -133,10 +133,75 @@ function drawAdminNav(title){
   $('body > ul > li.dropdown > button').text(title).append('<span class="header2_select__arrow"/>');
 }
 
-function drawFilmRedactor(){
+function drawFilmRedactor(section = 0){
   $('body .layout').empty();
 
   drawAdminNav('Редактор фильмов');
 
-  $('.layout').append('<div class="filmRedactorMenu"><li class="list-header">Категории</li><li class="selected"> <span onclick="drawFilmRedactor()">Добавить сеанс</span></li><li>        <span>Удалить сеанс</span></li><li>        <span>Добавить фильм</span></li><li>   <span>Удалить фильм</span></li></div><div class="right"><div><li class="list-header"><span style="margin:20px;">Добавление сеанса</span><li></div></div>')
+  $('.layout').append('<div class="filmRedactorMenu"><li class="list-header">Категории</li><li class="selected"> <span onclick="drawFilmRedactor(0)">Добавить сеанс</span></li><li class=""><span onclick="drawFilmRedactor(1)">Удалить сеанс</span></li><li class="">        <span onclick="drawFilmRedactor(2)">Добавить фильм</span></li><li class"">   <span onclick="drawFilmRedactor(3)">Удалить фильм</span></li></div>');
+
+  $('li.selected').removeClass('selected');
+  $('.filmRedactorMenu >li').eq(section+1).addClass("selected");
+  switch (section) {
+    case 1:
+      drawRemovingSession();
+      break;
+    case 2:
+      drawAddingMovie();
+      break;
+    case 3:
+      drawRemovingMovie();
+      break;
+    default:
+      drawAddingSession();
+      break;
+  }
+};
+function drawRemovingSession(){
+  $.ajax({
+    url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/session",
+    type: "GET",
+    success: function(result){
+      console.log(result[0].movie);
+      showModalInfo("Сеансы получены с сервера!");
+    }
+  });
+
+
+
+  var right = $('<div class="right">').append('<li class="list-header"><span style="margin:20px;">Удаление сеансов</div>');
+  $('.layout').append(right.append('<table id="table" class="table table-hover table-mc-light-blue">       <thead>         <tr>           <th>ID</th>          <th>Name</th>           <th>Link</th>           <th>Status</th>         </tr>      </thead>       <tbody>         <tr>           <td data-title="ID">1</td>          <td data-title="Name">Material Design Color Palette</td>           <td data-title="Link">             <ahref="https://github.com/zavoloklom/material-design-color-palette"target="_blank">GHub</a>           </td>           <td data-title="Status">Completed</td>         </tr>       </tbody>     </table>   </div>'));
 }
+
+function drawAddingSession(){
+
+  var right = $('<div class="right">').append('<div><li style="  padding: 13px 0px;" class="list-header"><span style="margin:20px;">Добавление сеанса</span><p class="tooltip-admin" style="left: 320px;" text="Для ввода нескольких значений используйте запятую"><b class="info-sign">ⓘ</b></p> </div></div>');
+
+  var container = $('<div>').append($('<form class="admin-form">')
+      .append($('<div class="group">')
+        .append($('<input type="text" name="movie" required>'))
+        .append($('<span class="bar bar-adm">'))
+        .append($('<label>')
+          .html('Фильм')))
+      .append($('<div class="group">')
+        .append($('<input type="text" name="date" required>'))
+        .append($('<span class="bar bar-adm">'))
+        .append($('<label>')
+          .html('Дата')))
+      .append($('<div class="group">')
+        .append($('<input type="text" name="time" required>'))
+        .append($('<span class="bar bar-adm">'))
+        .append($('<label>')
+          .html('Время')))
+      .append($('<div class="group">')
+        .append($('<input type="text" name="price" required>'))
+        .append($('<span class="bar bar-adm">'))
+        .append($('<label>')
+          .html('Цена'))
+      .append($('<button class="btn btn-admin" onclick="addSession(this.form)" type="button">')
+        .append($('<span>')
+          .html('Добавить')))));
+    right.append(container);
+
+    $('.layout').append(right);
+};
