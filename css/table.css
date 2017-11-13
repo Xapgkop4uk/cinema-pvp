@@ -1,12 +1,22 @@
-table{
-  width: 80%;
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
 }
-th,td {
-  border-bottom: 1px solid black;
+
+td, th {
+  border-bottom: 1px solid #1a1f23;
+  text-align: center;
+  padding: 20px;
+  padding-bottom: 7px;
+  position: relative;
 }
-  thead,
-  >body,
-  >tfoot{
-    border-bottom: 1px solid black;
-  }
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+th .labelTableButton, td .labelTableButton{
+  width: 100px;
+  padding: 10px;
+  color: black;
 }

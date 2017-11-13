@@ -98,7 +98,18 @@ function addSession(form){
       showModalInfo("Сеанс успешно добавлен на сервер!");
     }
   });
+};
 
+function deleteSession(objectId){
+  $.ajax({
+    url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/session/"+objectId,
+    type: "DELETE",
+    success: function(d){
+      console.log(d);
+      showModalInfo("Сеанс успешно удален!");
+      $('#'+objectId).remove();
+    }
+  });
 }
 
 function getCookie(name) {

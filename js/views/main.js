@@ -162,6 +162,35 @@ function drawRemovingSession(){
     url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/session",
     type: "GET",
     success: function(result){
+      var table =$('<table>')
+        .append($('<tr>')
+          .append($('<th>')
+            .html('Фильм'))
+          .append($('<th>')
+            .html('Дата'))
+          .append($('<th>')
+            .html('Время'))
+          .append($('<th>')
+            .html('Стоимость'))
+          .append($('<th>')
+            .html('<button type="button" class="btn" onclick="deleteSession()"> <span class="labelTableButton">Удалить Все</span></button>')));
+      result.forEach((element)=>{
+        var date = new Date(element.time);
+        var row = $('<tr id="'+element.objectId+'">')
+          .append($('<td>')
+            .html(element.movie))
+          .append($('<td>')
+            .html((addZero(date.getMonth()+1))+'/'+addZero(date.getDate())+'/'+addZero(date.getFullYear().toString().substr(-2))))
+          .append($('<td>')
+            .html(addZero(date.getHours())+':'+addZero(date.getMinutes())))
+          .append($('<td>')
+            .html(element.price))
+          .append($('<td>')
+            .html('<button type="button" class="btn" onclick="deleteSession('+"'"+element.objectId+"'" +')"><span class="labelTableButton">Удалить</span></button>'));
+        table.append(row);
+        })
+      right = right.append(table);
+
       console.log(result[0].movie);
       showModalInfo("Сеансы получены с сервера!");
     }
@@ -170,7 +199,7 @@ function drawRemovingSession(){
 
 
   var right = $('<div class="right">').append('<li class="list-header"><span style="margin:20px;">Удаление сеансов</div>');
-  $('.layout').append(right.append('<table id="table" class="table table-hover table-mc-light-blue">       <thead>         <tr>           <th>ID</th>          <th>Name</th>           <th>Link</th>           <th>Status</th>         </tr>      </thead>       <tbody>         <tr>           <td data-title="ID">1</td>          <td data-title="Name">Material Design Color Palette</td>           <td data-title="Link">             <ahref="https://github.com/zavoloklom/material-design-color-palette"target="_blank">GHub</a>           </td>           <td data-title="Status">Completed</td>         </tr>       </tbody>     </table>   </div>'));
+  $('.layout').append(right);
 }
 
 function drawAddingSession(){
@@ -205,3 +234,10 @@ function drawAddingSession(){
 
     $('.layout').append(right);
 };
+
+function addZero(i) {
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
