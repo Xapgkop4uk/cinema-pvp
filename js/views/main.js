@@ -49,12 +49,12 @@ function userSignUpForm(){
       .append($('<div class="group">')
         .append($('<input type="text" name="login" required>'))
         .append($('<span class="bar">'))
-        .append($('<label>')
+        .append($('<label class="label-text">')
           .html('Логин')))
       .append($('<div class="group">')
         .append($('<input type="password" name="password" required>'))
         .append($('<span class="bar">'))
-        .append($('<label>')
+        .append($('<label class="label-text">')
           .html('Пароль')))
       .append($('<button class="btn btn-submit" type="button" onclick="userLogin(this.form)">')
         .append($('<span>')
@@ -71,22 +71,22 @@ function userRegistrationForm(){
       .append($('<div class="group">')
         .append($('<input type="text" name="email" required>'))
         .append($('<span class="bar">'))
-        .append($('<label>')
+        .append($('<label class="label-text">')
           .html('E-mail')))
       .append($('<div class="group">')
         .append($('<input type="text" name="login" required>'))
         .append($('<span class="bar">'))
-        .append($('<label>')
+        .append($('<label class="label-text">')
           .html('Придумайте логин')))
       .append($('<div class="group">')
         .append($('<input type="password" name="password" required>'))
         .append($('<span class="bar">'))
-        .append($('<label>')
+        .append($('<label class="label-text">')
           .html('Придумайте пароль')))
       .append($('<div class="group">')
         .append($('<input type="password" name="password_rep" required>'))
         .append($('<span class="bar">'))
-        .append($('<label>')
+        .append($('<label class="label-text">')
           .html('Повторите пароль')))
       .append($('<button class="btn btn-submit" type="button" onclick="userRegistration(this.form);alert(document.cookie);">')
         .append($('<span>')
@@ -102,30 +102,7 @@ function drawAdminProfile(){
 
   var nav = $('<ul class="header2">').html('<li class="header2_left"><span class="header2_admin">Admin</span></li>    <li style><span class="header2_panel">Панель</span></li>    <li style="margin-top:15px;"class="dropdown">      <button class="dropbtn">Выбрать категорию<span class="header2_select__arrow"/></button>      <div class="dropdown-content">        <a href="#" onclick="drawFilmRedactor()">Редактировать фильмы</a>        <a href="#">Управлять бронированием</a>        <a href="#">Пользователи</a>   <a href="#">Статистика</a>     </div>    </li> <li class="header2_right"><button type="button" class="btn adminMenuButton">Выход</button></li>');
 var layout = $('<div class="layout">').append($('<div class="content">').append($('<h2>').html('Краткий отчет об ошибках')));
-  /*var nav = $('<div class="header2">')
-    .append($('<div class="header2_cell header2_left">')
-      .append($('<span class="header2_admin">')
-        .html('Admin'))
-      .append($('<span class="header2_panel">')
-        .html('Панель')))
-    .append($('<div class="header2_cell header2_middle">')
-      .append($('<div class="header2_select dropdown">')
-          .append($('<div class="header2_select__arrow">'))
-          .append($('<div class="dropdown">')
-              .html($('<button class="dropbtn"><span>wewef</span></button>'))
-            .append($('<div class="dropdown-content">')
-              .append($('<a href="#">')
-                .html($('Link 1'))))
-            .append($('<div class="dropdown-content">')
-              .append($('<a href="#">')
-                .html($('Link 2'))))
-            .append($('<div class="dropdown-content">')
-              .append($('<a href="#">')
-                .html($('Link 3')))))))
-    .append($('<div class="header2_cell header2_right">')
-      .append($('<button type="button" class="btn adminMenuButton">')
-        .append($('<span class="header2_select__arrow">'))
-        .html('Выход')));*/
+
     $('body').append(nav).append(layout);
 };
 
@@ -190,9 +167,6 @@ function drawRemovingSession(){
         table.append(row);
         })
       right = right.append(table);
-
-      console.log(result[0].movie);
-      showModalInfo("Сеансы получены с сервера!");
     }
   });
 
@@ -210,22 +184,22 @@ function drawAddingSession(){
       .append($('<div class="group">')
         .append($('<input type="text" name="movie" required>'))
         .append($('<span class="bar bar-adm">'))
-        .append($('<label>')
+        .append($('<label class="label-text">')
           .html('Фильм')))
       .append($('<div class="group">')
         .append($('<input type="text" name="date" required>'))
         .append($('<span class="bar bar-adm">'))
-        .append($('<label>')
+        .append($('<label class="label-text">')
           .html('Дата')))
       .append($('<div class="group">')
         .append($('<input type="text" name="time" required>'))
         .append($('<span class="bar bar-adm">'))
-        .append($('<label>')
+        .append($('<label class="label-text">')
           .html('Время')))
       .append($('<div class="group">')
         .append($('<input type="text" name="price" required>'))
         .append($('<span class="bar bar-adm">'))
-        .append($('<label>')
+        .append($('<label class="label-text">')
           .html('Цена'))
       .append($('<button class="btn btn-admin" onclick="addSession(this.form)" type="button">')
         .append($('<span>')
@@ -234,6 +208,32 @@ function drawAddingSession(){
 
     $('.layout').append(right);
 };
+
+function drawAddingMovie(){
+  var right = $('<div class="right">').append('<li class="list-header"><span style="margin:20px;">Добавление фильма</div>');
+  $('.layout').append(right);
+
+  var container = $('<div>').append($('<form class="admin-form">')
+      .append($('<div class="group">')
+        .append($('<input type="text" name="movie" required>'))
+        .append($('<span class="bar bar-adm">'))
+        .append($('<label class="label-text">')
+          .html('Название')))
+      .append($('<div class="group">')
+        .append('<div class="file-input">            <label id="click">              <i class="material-icons upload" style="position:absolute;font-size: 30px;color: #1a1f23;border: 1px solid black;z-index: 2;  box-shadow: 0 1px 4px rgba(0, 0, 0,0.4);">file_upload</i>              <input id="file_input_file" class="none" type="file" accept=".jpg, .jpeg, .png" name="image">            </label>            <div style="position: absolute;top: -8px;">              <input id="picture" name="movie" required="" readonly="" type="text">              <span class="bar bar-adm"></span>              <label id="label-picture"class="label-text">Постер</label>            </div>          </div>'))
+      .append($('<div class="group" style="margin-top:-20px;">')
+        .append($('<textarea name="comment" placeholder="Описание" rows="5" cols="35">'))
+      .append($('<button class="btn btn-admin" onclick="addMovie(this.form)" type="button">')
+        .append($('<span>')
+          .html('Добавить')))));
+    right.append(container);
+
+    $('#file_input_file').change(()=>{
+      $('#picture').val($('#file_input_file').val());
+      $('#label-picture').css('top','-15px');
+      $('#label-picture').css('font-size','14px');
+    });
+}
 
 function addZero(i) {
     if (i < 10) {

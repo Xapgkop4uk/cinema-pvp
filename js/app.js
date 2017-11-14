@@ -1,6 +1,7 @@
 var APP_ID = 'F4938450-8412-F432-FF30-7FF933EE1300';
 var API_KEY = '9D5C7C66-9B9D-35B7-FF7F-5EB8144C5C00';
 var COOKIE_LIVE = 1000000;
+var Message;
 
 Backendless.serverURL = 'https://api.backendless.com';
 Backendless.initApp(APP_ID, API_KEY);
@@ -73,43 +74,105 @@ function userLogout(){
 };
 
 function addSession(form){
+  var dateArray = form.date.value.split(',');
+  var timeArray = form.time.value.split(',');
 
-  var date = Date.parse(form.date.value+" "+form.time.value);
-  console.log(date);
-  if(isNaN(date)){
-    showModalInfo('Неверные параметры даты или времени.<br/>Используйте следующий формат "13/11/17 11:00".');
-    return;
-  }
+  Message ='';
 
-  var json ={
-    movie:form.movie.value,
-    time:date,
-    price:form.price.value
-  };
+  dateArray.forEach((day)=>{
+    timeArray.forEach((time)=>{
+      var date = Date.parse(day+" "+time);
+      console.log(date);
+      if(isNaN(date)){
+        showModalInfo('Неверные параметры даты или времени.<br/>Используйте следующий формат "Месяц{2}/День{2}/Год{2} 11:00".');
+        return;
+      }
+      var json ={
+        movie:form.movie.value,
+        time:date,
+        price:form.price.value
+      };
 
-  $.ajax({
-    url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/session",
-    contentType:"application/json",
-    type: "POST",
-    dataType: "json",
-    data: JSON.stringify(json),
-    success: function(d){
-      console.log(d);
-      showModalInfo("Сеанс успешно добавлен на сервер!");
-    }
+      $.ajax({
+        url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/session",
+        contentType:"application/json",
+        type: "POST",
+        dataType: "json",
+        data: JSON.stringify(json),
+        success: function(d){
+          console.log("Сеанс '"+json.movie+" "+day+" "+time+"' успешно добавлен на сервер!");
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+          Message = ("Status: " + textStatus+".Error: " + errorThrown);
+        }
+      });
+    });
   });
+  drawAddingSession();
 };
 
 function deleteSession(objectId){
+  if(objectId){
+    $.ajax({
+      url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/session/"+objectId,
+      type: "DELETE",
+      success: function(d){
+        console.log(d);
+        showModalInfo("Сеанс успешно удален!");
+        $('#'+objectId).remove();
+      }
+    });
+  }
+  else{
+    $.ajax({
+      url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/bulk/session?where=price>1",
+      type: "DELETE",
+      success: function(d){
+        console.log(d);
+        showModalInfo("Сеансы успешно удалены!");
+        drawRemovingSession();
+      }
+    });
+  }
+}
+
+function addMovie(form){
+  var image = form.image.value;
+
+  var movie={
+    name:form.movie.value,
+    mark:10.0,
+    views:0,
+    marks:0,
+    comment:form.comment.value
+  }
+
   $.ajax({
-    url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/session/"+objectId,
-    type: "DELETE",
-    success: function(d){
-      console.log(d);
-      showModalInfo("Сеанс успешно удален!");
-      $('#'+objectId).remove();
-    }
+    url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/movies",
+    contentType:"application/json",
+    type: "POST",
+    dataType: "json",
+    data: JSON.stringify(movie),
+    success: function(result){
+      $.ajax({
+        url:"https://api.backendless.com/v1/files/images/"+result.objectId+"?overwrite=true",
+        contentType:"application/json",
+        applicationType:"application/json",
+        type: "POST",
+        dataType: "json",
+        data: JSON.stringify(image);
+        beforeSend: function(xhr){
+          xhr.setRequestHeader('application-id', APP_ID);
+          xhr.setRequestHeader('secret-key', API_KEY);
+        },
+        success: function(result){
+          console.log(result);
+        }
+      });
+    },
   });
+
+  console.log(form.comment.value);
 }
 
 function getCookie(name) {

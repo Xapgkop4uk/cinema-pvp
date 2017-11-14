@@ -1,0 +1,83 @@
+.file_input_div {
+  margin: auto;
+  width: 250px;
+  height: 40px;
+}
+
+.file_input {
+  float: left;
+  border: 2px solid #1a1f23;
+  border-radius: 50%;
+  background: white;
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+
+#file_input_text_div {
+  width: 200px;
+  margin-top: -8px;
+  margin-left: 5px;
+}
+
+.none {
+  display: none;
+}
+.material-icons{
+  transition: background-color .3s;
+}
+.material-icons:hover{
+  background-color: silver;
+}
+
+.image-input{
+  position: absolute;
+  right: 160px;
+  top: 10px;
+}
+
+.file-input{
+  height: 30px;
+
+}
+ #picture{
+  width: 260px;
+}
+#click{
+  left: unset;
+  right: 230px;
+  position: absolute;
+}
+textarea {
+	display: block;
+	width: 300px;
+  font-size: 18px;
+  max-width: 300px;
+  min-width: 300px;
+	border: 0;
+	padding: 10px 5px;
+  background: white no-repeat;
+  font-family: 'Open Sans Condensed', sans-serif;
+  overflow: hidden;
+
+	/*
+	* IMPORTANT PART HERE
+	*/
+
+  /* 2 imgs : 1px gray line (normal state) AND 2px green line (focus state) */
+	background-image: linear-gradient(to bottom, #1a1f23, #1a1f23), linear-gradient(to bottom, silver, silver);
+	/* sizes for the 2 images (default state) */
+	background-size: 0 2px, 100% 1px;
+	/* positions for the 2 images. Change both "50%" to "0%" or "100%" and tri again */
+	background-position: 50% 100%, 50% 100%;
+
+	/* animation solely on background-size */
+  transition: background-size 0.3s cubic-bezier(0.64, 0.09, 0.08, 1);
+
+}
+
+textarea:focus{
+  /* sizes for the 2 images (focus state) */
+	background-size: 100% 2px, 100% 1px;
+	outline: none;
+}
