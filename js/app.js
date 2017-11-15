@@ -137,10 +137,13 @@ function deleteSession(objectId){
 }
 
 function addMovie(form){
-  var image = form.image.value;
-
+  var image = form.image;
+  var formData = new FormData();
+  formData.append('section', 'general');
+  formData.append('action', 'previewImg');
+  formData.append('image', image.files[0]);
   var movie={
-    name:form.movie.value,
+    name: form.name.value,
     mark:10.0,
     views:0,
     marks:0,
@@ -155,24 +158,51 @@ function addMovie(form){
     data: JSON.stringify(movie),
     success: function(result){
       $.ajax({
-        url:"https://api.backendless.com/v1/files/images/"+result.objectId+"?overwrite=true",
-        contentType:"application/json",
-        applicationType:"application/json",
+        url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/files/images/"+result.objectId+".jpg?overwrite=true",
+        contentType:false,
+        processData: false,
         type: "POST",
-        dataType: "json",
-        data: JSON.stringify(image);
-        beforeSend: function(xhr){
-          xhr.setRequestHeader('application-id', APP_ID);
-          xhr.setRequestHeader('secret-key', API_KEY);
-        },
+        data: formData,
         success: function(result){
           console.log(result);
         }
       });
-    },
+    }
   });
+}
 
-  console.log(form.comment.value);
+function deleteMovie(id){
+  $.ajax({
+    url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/movies/"+id,
+    type: "DELETE",
+    success: function(d){
+      $.ajax({
+        url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/files/images/"+id+".jpg",
+        type: "DELETE"
+      });
+      showModalInfo("Фильм успешно удален!");
+      $('#'+id).remove();
+    }
+  });
+}
+
+function editMovie(id){
+  var row = $('#'+id);
+  var movie ={
+    name:row.find('#change-movie-name')[0].innerText,
+    comment:row.find('#change-movie-comment')[0].innerText
+  }
+
+  $.ajax({
+    url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/movies/"+id,
+    contentType:"application/json",
+    type: "PUT",
+    dataType: "json",
+    data: JSON.stringify(movie),
+    success: function(result){
+      console.log(result);
+    }
+  });
 }
 
 function getCookie(name) {
@@ -211,7 +241,7 @@ function setCookie(name, value, options) {
   document.cookie = updatedCookie;
 };
 
-function deleteCookie(name) {
+function deleteCookie(id) {
   setCookie(name, "", {
     expires: -1
   })

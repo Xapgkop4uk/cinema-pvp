@@ -115,7 +115,7 @@ function drawFilmRedactor(section = 0){
 
   drawAdminNav('Редактор фильмов');
 
-  $('.layout').append('<div class="filmRedactorMenu"><li class="list-header">Категории</li><li class="selected"> <span onclick="drawFilmRedactor(0)">Добавить сеанс</span></li><li class=""><span onclick="drawFilmRedactor(1)">Удалить сеанс</span></li><li class="">        <span onclick="drawFilmRedactor(2)">Добавить фильм</span></li><li class"">   <span onclick="drawFilmRedactor(3)">Удалить фильм</span></li></div>');
+  $('.layout').append('<div class="filmRedactorMenu"><li class="list-header">Категории</li><li class="selected"> <span onclick="drawFilmRedactor(0)">Добавить сеанс</span></li><li class=""><span onclick="drawFilmRedactor(1)">Удалить сеанс</span></li><li class="">        <span onclick="drawFilmRedactor(2)">Добавить фильм</span></li><li class"">   <span onclick="drawFilmRedactor(3)">Редактировать фильм</span></li></div>');
 
   $('li.selected').removeClass('selected');
   $('.filmRedactorMenu >li').eq(section+1).addClass("selected");
@@ -215,13 +215,13 @@ function drawAddingMovie(){
 
   var container = $('<div>').append($('<form class="admin-form">')
       .append($('<div class="group">')
-        .append($('<input type="text" name="movie" required>'))
+        .append($('<input type="text" name="name" required>'))
         .append($('<span class="bar bar-adm">'))
         .append($('<label class="label-text">')
           .html('Название')))
       .append($('<div class="group">')
         .append('<div class="file-input">            <label id="click">              <i class="material-icons upload" style="position:absolute;font-size: 30px;color: #1a1f23;border: 1px solid black;z-index: 2;  box-shadow: 0 1px 4px rgba(0, 0, 0,0.4);">file_upload</i>              <input id="file_input_file" class="none" type="file" accept=".jpg, .jpeg, .png" name="image">            </label>            <div style="position: absolute;top: -8px;">              <input id="picture" name="movie" required="" readonly="" type="text">              <span class="bar bar-adm"></span>              <label id="label-picture"class="label-text">Постер</label>            </div>          </div>'))
-      .append($('<div class="group" style="margin-top:-20px;">')
+      .append($('<div class="group">')
         .append($('<textarea name="comment" placeholder="Описание" rows="5" cols="35">'))
       .append($('<button class="btn btn-admin" onclick="addMovie(this.form)" type="button">')
         .append($('<span>')
@@ -233,6 +233,55 @@ function drawAddingMovie(){
       $('#label-picture').css('top','-15px');
       $('#label-picture').css('font-size','14px');
     });
+}
+
+function drawRemovingMovie(){
+
+  $.ajax({
+    url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/movies",
+    type: "GET",
+    success: function(result){
+      var table =$('<table>')
+        .append($('<tr>')
+          .append($('<th>')
+            .html('Постер'))
+          .append($('<th>')
+            .html('Название'))
+          .append($('<th>')
+            .html('Комментарий'))
+          .append($('<th>')
+            .html('Оценка'))
+          .append($('<th>')
+            .html('Оценок'))
+          .append($('<th>')
+            .html('Просмотров'))
+          .append($('<th>')));
+      result.forEach((element)=>{
+        var date = new Date(element.time);
+        var row = $('<tr id="'+element.objectId+'">')
+          .append($('<td class="change" id="change-poster">')
+            .html('<img class="poster" src="https://api.backendless.com/F4938450-8412-F432-FF30-7FF933EE1300/9D5C7C66-9B9D-35B7-FF7F-5EB8144C5C00/files/images/'+element.objectId+'.jpg"/>'))
+          .append($('<td class="change" onclick="showEditModal(this)" id="change-movie-name">')
+            .html(element.name))
+          .append($('<td class="change"  onclick="showEditModal(this)" id="change-movie-comment">')
+            .html(element.comment))
+          .append($('<td>')
+            .html(element.mark))
+          .append($('<td>')
+            .html(element.marks))
+          .append($('<td>')
+            .html(element.views))
+          .append($('<td>')
+            .html('<button type="button" class="btn" onclick="deleteMovie('+"'"+element.objectId+"'" +')"><span class="labelTableButton">Удалить</span></button>')
+            .append('<button type="button" class="btn" onclick="editMovie('+"'"+element.objectId+"'" +')"><span class="labelTableButton">Применить</span></button>'));
+        table.append(row);
+      });
+      right = right.append(table);
+    }
+  });
+  var right = $('<div class="right">').append('<li class="list-header"><span style="margin:20px;">Редактирование фильмов</div>');
+
+  $('.layout').append(right);
 }
 
 function addZero(i) {

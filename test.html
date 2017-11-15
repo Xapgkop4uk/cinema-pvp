@@ -1,0 +1,52 @@
+<html>
+<head>
+  <link href="css/global.css" rel="stylesheet" />
+  <link href="css/modals.css" rel="stylesheet" />
+  <link href="css/tooltips.css" rel="stylesheet"  />
+  <link href="css/table.css" rel="stylesheet"  />
+  <link href="css/input.css" rel="stylesheet"  />
+  <link href="css/select.css" rel="stylesheet"  />
+
+  <link href="css/material-icons.css" rel="stylesheet"  />
+</head>
+<body>
+<p>Which is the most annoing browser of them all:</p>
+<select class ="selection" id="sel" size = "1">
+    <option></option>
+    <option>IE 9</option>
+    <option>IE 10</option>
+    <option>Edge</option>
+    <option>Firefox</option>
+    <option>Chrome</option>
+    <option>Opera</option>
+    <option>Safari</option>
+    <option>UC Browser</option>
+</select>
+</body>
+</html>
+
+<script>
+document.getElementById('sel').addEventListener('click', onClickHandler);
+document.getElementById('sel').addEventListener('mousedown', onMouseDownHandler);
+
+function onMouseDownHandler(e){
+	var el = e.currentTarget;
+
+    if(el.hasAttribute('size') && el.getAttribute('size') == '1'){
+    	e.preventDefault();
+    }
+}
+function onClickHandler(e) {
+ 	var el = e.currentTarget;
+
+    if (el.getAttribute('size') == '1') {
+        el.className += " selectOpen";
+        el.setAttribute('size', '6');
+    }
+    else {
+        el.className = '';
+        el.setAttribute('size', '1');
+    }
+}
+
+</script>
