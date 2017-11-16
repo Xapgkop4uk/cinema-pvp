@@ -82,7 +82,7 @@ function addSession(form){
   dateArray.forEach((day)=>{
     timeArray.forEach((time)=>{
       var date = Date.parse(day+" "+time);
-      console.log(date);
+      console.log(form.movie.value);
       if(isNaN(date)){
         showModalInfo('Неверные параметры даты или времени.<br/>Используйте следующий формат "Месяц{2}/День{2}/Год{2} 11:00".');
         return;
@@ -130,7 +130,6 @@ function deleteSession(objectId){
       success: function(d){
         console.log(d);
         showModalInfo("Сеансы успешно удалены!");
-        drawRemovingSession();
       }
     });
   }
@@ -142,6 +141,7 @@ function addMovie(form){
   formData.append('section', 'general');
   formData.append('action', 'previewImg');
   formData.append('image', image.files[0]);
+
   var movie={
     name: form.name.value,
     mark:10.0,
@@ -164,11 +164,11 @@ function addMovie(form){
         type: "POST",
         data: formData,
         success: function(result){
-          console.log(result);
-        }
-      });
-    }
-  });
+                  showModalInfo('Фильм успешно добавлен в медиатеку');
+              }
+       });
+     }
+ });
 }
 
 function deleteMovie(id){
@@ -200,10 +200,11 @@ function editMovie(id){
     dataType: "json",
     data: JSON.stringify(movie),
     success: function(result){
-      console.log(result);
+      showModalInfo("Данные успешно обновлены!");
     }
   });
 }
+
 
 function getCookie(name) {
   var matches = document.cookie.match(new RegExp(
@@ -241,7 +242,7 @@ function setCookie(name, value, options) {
   document.cookie = updatedCookie;
 };
 
-function deleteCookie(id) {
+function deleteCookie(name) {
   setCookie(name, "", {
     expires: -1
   })

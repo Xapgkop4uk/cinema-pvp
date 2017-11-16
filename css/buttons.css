@@ -1,0 +1,102 @@
+.btn.btn-admin{
+  position: absolute;
+  right: 20px;
+  border: 1px solid #1a1f23;
+  color: #1a1f23;
+  bottom: 0px;
+}
+
+.btn.mainMenuButton{
+  color:white;
+  display: inline-block;
+  vertical-align: middle;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+  right: 20px;
+  border-radius: 3px;
+  background-color: #4a138c;
+  padding: 5px;
+  height: 37px;
+  overflow: hidden;
+}
+
+.btn {
+  position: relative;
+
+  padding: 0;
+  cursor: pointer;
+
+  overflow: hidden;
+  right: 0px;
+  border-width: 0;
+  outline: none;
+  border-radius: 2px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+
+  background-color: white;
+  color: rgb(34, 92, 130, 0.8);
+
+  transition: background-color .3s;
+}
+
+.btn-submit{
+  position: absolute;
+  right: 0px;
+}
+
+.btn:hover, .btn:focus {
+  background-color: silver;
+}
+
+.btn > * {
+  position: relative;
+}
+
+.btn span {
+  display: block;
+  padding: 12px 24px;
+}
+
+.btn:before {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  display: block;
+  width: 0;
+  padding-top: 0;
+
+  border-radius: 100%;
+
+  background-color: rgba(236, 240, 241, .3);
+
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.btn:active:before {
+  width: 120%;
+  padding-top: 120%;
+
+  transition: width .2s ease-out, padding-top .2s ease-out;
+}
+
+.btn.adminMenuButton{
+  color:white;
+  position: absolute;
+  display: inline-block;
+  vertical-align: middle;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+  right: 20px;
+  border-radius: 3px;
+  background-color: #1a1f23;
+  padding: 5px;
+  height: 37px;
+  overflow: hidden;
+}

@@ -14,6 +14,11 @@
   position: relative;
 }
 
+input.input-signup{
+  background-color: #4a138c;
+  border-bottom:1px solid #7c42bd;
+}
+
 #file_input_text_div {
   width: 200px;
   margin-top: -8px;
