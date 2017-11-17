@@ -1,11 +1,36 @@
 function drawMainPage(){
   var panel = $('<div class="preview">');
+  var scroller = $('<section class="center slider">');
   $('body').empty();
   $.ajax({
     url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/movies",
     type: "GET",
     success: function(result){
       result.forEach((element)=>{
+        scroller.append($('<div>')
+          .append($('<ul class="panel-ul">')
+            .append($('<li class="panel-li">')
+              .append($('<img src="https://api.backendless.com/F4938450-8412-F432-FF30-7FF933EE1300/9D5C7C66-9B9D-35B7-FF7F-5EB8144C5C00/files/images/'+element.objectId+'.jpg" class="panel-img">')))
+            .append($('<li class="panel-li">')
+              .append($('<h2 class="panel-header">')
+                .html(element.name)))
+            .append($('<li class="panel-li">')
+              .append($('<p class="panel-comment">')
+                .html(element.comment)))
+            .append($('<li class="panel-li">')
+              .append($('<button type="button" onclick="aboutFilm('+element.obkectId+')" class="panel-btn panel-btn-about">')
+                .html('Фильм')))
+            .append($('<li class="panel-li">')
+              .append($('<button type="button" class="panel-btn panel-btn-session">')
+                .html('Сеансы')))));
+      });
+      $('body').append(scroller);
+
+      $(".center").slick({
+        infinite: true,
+        centerMode: true,
+        slidesToShow: 3,
+        slidesToScroll: 1,
       });
     }
   });
@@ -23,9 +48,7 @@ function drawMainPage(){
         .html('Выход')));
   }
   page.append(loginMenu);
-  panel.append('<ul class="panel-ul" style="width:300px; height:500px;"><li class="panel-li"><img src="src/images/2.jpg" class="panel-img" style="width:280px; heigth:380px; padding:10px;"></li><li class="panel-li"><button type="button" class="panel-btn">О фильме</button></li><li class="panel-li"><button type="button" class="panel-btn">Сеансы</button></li>')
-
-  $('body').append(page).append(panel);
+  $('body').append(page);
 
 };
 

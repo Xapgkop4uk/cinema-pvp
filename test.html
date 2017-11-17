@@ -1,52 +1,166 @@
 <html>
-<head>
+  <head>
+  <title>My Now Amazing Webpage</title>
+  <meta charset="UTF-8">
   <link href="css/global.css" rel="stylesheet" />
   <link href="css/modals.css" rel="stylesheet" />
   <link href="css/tooltips.css" rel="stylesheet"  />
   <link href="css/table.css" rel="stylesheet"  />
   <link href="css/input.css" rel="stylesheet"  />
-  <link href="css/select.css" rel="stylesheet"  />
-
   <link href="css/material-icons.css" rel="stylesheet"  />
+  <link href="css/select-box.css" rel="stylesheet"  />
+  <link href="css/buttons.css" rel="stylesheet"  />
+  <link href="css/panel.css" rel="stylesheet"  />
+  <link href="css/slick.css" rel="stylesheet" />
+  <link href="css/slick-theme.css" rel="stylesheet"/>
+
+
+  </head>
+  <style type="text/css">
+
+
+    .slider {
+        width: 50%;
+        margin: 100px auto;
+    }
+
+    .slick-slide {
+      margin: 0px 20px;
+    }
+
+    .slick-slide img {
+      width: 100%;
+    }
+
+    .slick-prev:before,
+    .slick-next:before {
+      color: black;
+    }
+
+
+    .slick-slide {
+      transition: all ease-in-out .3s;
+      opacity: .2;
+    }
+
+    .slick-active {
+      opacity: .5;
+    }
+
+    .slick-current {
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
-<p>Which is the most annoing browser of them all:</p>
-<select class ="selection" id="sel" size = "1">
-    <option></option>
-    <option>IE 9</option>
-    <option>IE 10</option>
-    <option>Edge</option>
-    <option>Firefox</option>
-    <option>Chrome</option>
-    <option>Opera</option>
-    <option>Safari</option>
-    <option>UC Browser</option>
-</select>
-</body>
+
+
+
+  <section class="center slider">
+    <div>
+      <ul class="panel-ul" >
+        <li class="panel-li">
+          <img src="src/images/2.jpg" class="panel-img">
+        </li>
+        <li class="panel-li">
+          <h2 class="panel-header">Король Джулиан</h2>
+        </li>
+
+        <li class="panel-li">
+          <p class="panel-comment">
+            Короткий комментарий в принципе неплох
+          </p>
+        </li>
+        <li class="panel-li">
+          <button type="button" class="panel-btn panel-btn-about">О фильме</button>
+        </li>
+        <li class="panel-li">
+          <button type="button" class="panel-btn panel-btn-session">Сеансы</button>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <ul class="panel-ul" >
+        <li class="panel-li">
+          <img src="src/images/2.jpg" class="panel-img">
+        </li>
+        <li class="panel-li">
+          <h2 class="panel-header">Король Джулиан</h2>
+        </li>
+
+        <li class="panel-li">
+          <p class="panel-comment">
+            Короткий комментарий в принципе неплох
+          </p>
+        </li>
+        <li class="panel-li">
+          <button type="button" class="panel-btn panel-btn-about">О фильме</button>
+        </li>
+        <li class="panel-li">
+          <button type="button" class="panel-btn panel-btn-session">Сеансы</button>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <ul class="panel-ul" >
+        <li class="panel-li">
+          <img src="src/images/2.jpg" class="panel-img">
+        </li>
+        <li class="panel-li">
+          <h2 class="panel-header">Король Джулиан</h2>
+        </li>
+
+        <li class="panel-li">
+          <p class="panel-comment">
+            Короткий комментарий в принципе неплох
+          </p>
+        </li>
+        <li class="panel-li">
+          <button type="button" class="panel-btn panel-btn-about">О фильме</button>
+        </li>
+        <li class="panel-li">
+          <button type="button" class="panel-btn panel-btn-session">Сеансы</button>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <ul class="panel-ul" >
+        <li class="panel-li">
+          <img src="src/images/2.jpg" class="panel-img">
+        </li>
+        <li class="panel-li">
+          <h2 class="panel-header">Король Джулиан</h2>
+        </li>
+
+        <li class="panel-li">
+          <p class="panel-comment">
+            Короткий комментарий в принципе неплох
+          </p>
+        </li>
+        <li class="panel-li">
+          <button type="button" class="panel-btn panel-btn-about">О фильме</button>
+        </li>
+        <li class="panel-li">
+          <button type="button" class="panel-btn panel-btn-session">Сеансы</button>
+        </li>
+      </ul>
+    </div>
+    </section>
+
+
+
+  <script src="js/libraries/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="js/libraries/slick.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $(".center").slick({
+        infinite: true,
+        centerMode: true,
+        slidesToShow: 3,
+        slidesToScroll: 1
+      });
+    });
+  </script>
+
+  </body>
 </html>
-
-<script>
-document.getElementById('sel').addEventListener('click', onClickHandler);
-document.getElementById('sel').addEventListener('mousedown', onMouseDownHandler);
-
-function onMouseDownHandler(e){
-	var el = e.currentTarget;
-
-    if(el.hasAttribute('size') && el.getAttribute('size') == '1'){
-    	e.preventDefault();
-    }
-}
-function onClickHandler(e) {
- 	var el = e.currentTarget;
-
-    if (el.getAttribute('size') == '1') {
-        el.className += " selectOpen";
-        el.setAttribute('size', '6');
-    }
-    else {
-        el.className = '';
-        el.setAttribute('size', '1');
-    }
-}
-
-</script>
