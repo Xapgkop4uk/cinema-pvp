@@ -1,0 +1,47 @@
+.cinemaHall {
+  text-align: center;
+  display: table;
+  vertical-align: top;
+  margin: 5% auto;
+}
+.seat, .bought {
+  height: 25px;
+  width: 25px;
+  margin-right: 2px;
+  border-radius: 3px;
+  display: inline-block;
+  text-align: center;
+}
+.bought{
+  background-color: #7b0000;
+  pointer-events: none;
+  color:white
+}
+
+.seat{
+  background-color: white;
+  cursor: pointer;
+}
+
+.passageBetween {
+  height: 5px;
+  width: 100%;
+  display: block;
+}
+.bay {
+  background-color: green;
+  color:white;
+}
+.result {
+  font-size: 10px;
+  display: inline-block;
+  width: 90px;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-right: 5px;
+}
+.rowNumber{
+  position: absolute;
+  color:white;
+  margin-left: -25px;
+}

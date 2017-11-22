@@ -1,4 +1,4 @@
-function drawFilmRedactor(section = 0){
+function drawFilmRedactor(section){
   $('body .layout').empty();
 
   drawAdminNav('Редактор фильмов');
@@ -73,6 +73,10 @@ function drawAddingSession(){
 
   var select = $('<select name="movie" id="movie">')
       .append($('<option value="" disabled>').html('Фильм'));
+  var selectRoom = $('<select name="room" id="room">')
+      .append($('<option value="" disabled">').html('Зал'))
+      .append($('<option value="1">').html('1'))
+      .append($('<option value="2">').html('2'));
 
   $.ajax({
     url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/movies",
@@ -84,16 +88,16 @@ function drawAddingSession(){
 
       $('.sel').each(function() {
         $(this).children('select').css('display', 'none');
-        var $current = $(this);
+        var current = $(this);
         $(this).find('option').each(function(i) {
           if (i == 0) {
-            $current.prepend($('<div>', {
-              class: $current.attr('class').replace(/sel/g, 'sel__box')
+            current.prepend($('<div>', {
+              class: current.attr('class').replace(/sel/g, 'sel__box')
             }));
 
             var placeholder = $(this).text();
-            $current.prepend($('<span>', {
-              class: $current.attr('class').replace(/sel/g, 'sel__placeholder'),
+            current.prepend($('<span>', {
+              class: current.attr('class').replace(/sel/g, 'sel__placeholder'),
               text: placeholder,
               'data-placeholder': placeholder
             }));
@@ -101,8 +105,8 @@ function drawAddingSession(){
             return;
           }
 
-          $current.children('div').append($('<span>', {
-            class: $current.attr('class').replace(/sel/g, 'sel__box__options'),
+          current.children('div').append($('<span>', {
+            class: current.attr('class').replace(/sel/g, 'sel__box__options'),
             text: $(this).text()
           }));
         });
@@ -121,9 +125,9 @@ function drawAddingSession(){
         $(this).siblings('.sel__box__options').removeClass('selected');
         $(this).addClass('selected');
 
-        var $currentSel = $(this).closest('.sel');
-        $currentSel.children('.sel__placeholder').text(txt);
-        $currentSel.children('select').prop('selectedIndex', index + 1);
+        var currentSel = $(this).closest('.sel');
+        currentSel.children('.sel__placeholder').text(txt);
+        currentSel.children('select').prop('selectedIndex', index + 1);
       });
     }
   });
@@ -132,6 +136,9 @@ function drawAddingSession(){
       .append($('<div class="group">')
         .append($('<div class="sel">')
           .append(select)))
+      .append($('<div class="group">')
+        .append($('<div class="sel">')
+          .append(selectRoom)))
       .append($('<div class="group">')
         .append($('<input type="text" name="date" required>'))
         .append($('<span class="bar bar-adm">'))

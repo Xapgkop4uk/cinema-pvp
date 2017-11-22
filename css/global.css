@@ -7,7 +7,7 @@ body, html {
     list-style: none;
     line-height: 1.5;
     background-image: url('../src/images/background.jpg');
-    background-color: #CCCCCC;
+    background-color: #2f343a;
 }
 nav{
     position: relative;
@@ -15,6 +15,15 @@ nav{
     background-color: #4a148c;
 }
 
+h3{
+  color:white;
+  text-align: center;
+}
+
+h4{
+  color:silver;
+  text-align: center;
+}
 
 form {
   position: relative;

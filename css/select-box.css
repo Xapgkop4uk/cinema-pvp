@@ -63,6 +63,7 @@
   background-color: #FFF;
   width: calc(100% + 8px);
   box-sizing: border-box;
+  z-index: 1;
 }
 
 .sel.active .sel__box {
@@ -95,7 +96,6 @@
 /* ----- Select Box Black Panther ----- */
 .sel {
   border-bottom: 1px solid #c0c0c0;
-  z-index: 1;
 }
 
 /* ===== Keyframes ===== */

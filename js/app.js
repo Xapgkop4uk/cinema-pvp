@@ -89,6 +89,7 @@ function addSession(form){
       }
       var json ={
         movie:form.movie.value,
+        room:form.room.value,
         time:date,
         price:form.price.value
       };
@@ -147,7 +148,8 @@ function addMovie(form){
     mark:10.0,
     views:0,
     marks:0,
-    comment:form.comment.value
+    comment:form.comment.value,
+    about:""
   }
 
   $.ajax({
@@ -245,4 +247,9 @@ function deleteCookie(name) {
   setCookie(name, "", {
     expires: -1
   })
+}
+
+function getMonth(number){
+  months = ['Января','Февраля','Марта','Апреля','Мая','Июня','Июля','Августа','Сентября','Октября','Ноября','Декабря'];
+  return months[number];
 }

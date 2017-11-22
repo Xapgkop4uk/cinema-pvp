@@ -18,10 +18,10 @@ function drawMainPage(){
               .append($('<p class="panel-comment">')
                 .html(element.comment)))
             .append($('<li class="panel-li">')
-              .append($('<button type="button" onclick="aboutFilm('+element.obkectId+')" class="panel-btn panel-btn-about">')
+              .append($('<button type="button" onclick="aboutFilm(\''+element.objectId+'\')" class="panel-btn panel-btn-about">')
                 .html('Фильм')))
             .append($('<li class="panel-li">')
-              .append($('<button type="button" class="panel-btn panel-btn-session">')
+              .append($('<button type="button" class="panel-btn panel-btn-session" onclick="drawSessionsSelection(\''+element.name+'\')">')
                 .html('Сеансы')))));
       });
       $('body').append(scroller);
@@ -51,9 +51,6 @@ function drawMainPage(){
   $('body').append(page);
 
 };
-
-
-
 
 function addZero(i) {
     if (i < 10) {

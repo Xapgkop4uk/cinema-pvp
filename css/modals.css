@@ -50,6 +50,10 @@
     font-weight: bold;
     vertical-align: top;
 }
+#CinemaModal .modal-content{
+  background-color: unset;
+  background-image: url('../src/images/background.jpg');
+}
 
 #infoModal .modal-content .close:hover,
 #infoModal .modal-content .close:focus {

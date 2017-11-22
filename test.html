@@ -17,149 +17,94 @@
 
   </head>
   <style type="text/css">
-
-
-    .slider {
-        width: 50%;
-        margin: 100px auto;
-    }
-
-    .slick-slide {
-      margin: 0px 20px;
-    }
-
-    .slick-slide img {
-      width: 100%;
-    }
-
-    .slick-prev:before,
-    .slick-next:before {
-      color: black;
-    }
-
-
-    .slick-slide {
-      transition: all ease-in-out .3s;
-      opacity: .2;
-    }
-
-    .slick-active {
-      opacity: .5;
-    }
-
-    .slick-current {
-      opacity: 1;
-    }
+  .cinemaHall {
+    text-align: center;
+    display: inline-block;
+    vertical-align: top;
+  }
+  .seat {
+    height: 25px;
+    width: 25px;
+    margin-right: 2px;
+    background-color: #999999;
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+  }
+  .passageBetween {
+    height: 5px;
+    width: 100%;
+    display: block;
+  }
+  .bay {
+    background-color: red;
+  }
+  .result {
+    font-size: 10px;
+    display: inline-block;
+    width: 90px;
+    max-height: 200px;
+    overflow-y: auto;
+    margin-right: 5px;
+  }
+  .rowNumber{
+    position: absolute;
+    color:white;
+    margin-left: -25px;
+  }
   </style>
 </head>
 <body>
 
 
-
-  <section class="center slider">
-    <div>
-      <ul class="panel-ul" >
-        <li class="panel-li">
-          <img src="src/images/2.jpg" class="panel-img">
-        </li>
-        <li class="panel-li">
-          <h2 class="panel-header">Король Джулиан</h2>
-        </li>
-
-        <li class="panel-li">
-          <p class="panel-comment">
-            Короткий комментарий в принципе неплох
-          </p>
-        </li>
-        <li class="panel-li">
-          <button type="button" class="panel-btn panel-btn-about">О фильме</button>
-        </li>
-        <li class="panel-li">
-          <button type="button" class="panel-btn panel-btn-session">Сеансы</button>
-        </li>
-      </ul>
-    </div>
-    <div>
-      <ul class="panel-ul" >
-        <li class="panel-li">
-          <img src="src/images/2.jpg" class="panel-img">
-        </li>
-        <li class="panel-li">
-          <h2 class="panel-header">Король Джулиан</h2>
-        </li>
-
-        <li class="panel-li">
-          <p class="panel-comment">
-            Короткий комментарий в принципе неплох
-          </p>
-        </li>
-        <li class="panel-li">
-          <button type="button" class="panel-btn panel-btn-about">О фильме</button>
-        </li>
-        <li class="panel-li">
-          <button type="button" class="panel-btn panel-btn-session">Сеансы</button>
-        </li>
-      </ul>
-    </div>
-    <div>
-      <ul class="panel-ul" >
-        <li class="panel-li">
-          <img src="src/images/2.jpg" class="panel-img">
-        </li>
-        <li class="panel-li">
-          <h2 class="panel-header">Король Джулиан</h2>
-        </li>
-
-        <li class="panel-li">
-          <p class="panel-comment">
-            Короткий комментарий в принципе неплох
-          </p>
-        </li>
-        <li class="panel-li">
-          <button type="button" class="panel-btn panel-btn-about">О фильме</button>
-        </li>
-        <li class="panel-li">
-          <button type="button" class="panel-btn panel-btn-session">Сеансы</button>
-        </li>
-      </ul>
-    </div>
-    <div>
-      <ul class="panel-ul" >
-        <li class="panel-li">
-          <img src="src/images/2.jpg" class="panel-img">
-        </li>
-        <li class="panel-li">
-          <h2 class="panel-header">Король Джулиан</h2>
-        </li>
-
-        <li class="panel-li">
-          <p class="panel-comment">
-            Короткий комментарий в принципе неплох
-          </p>
-        </li>
-        <li class="panel-li">
-          <button type="button" class="panel-btn panel-btn-about">О фильме</button>
-        </li>
-        <li class="panel-li">
-          <button type="button" class="panel-btn panel-btn-session">Сеансы</button>
-        </li>
-      </ul>
-    </div>
-    </section>
-
+  <div class='result'>
+  </div>
+  <div class='cinemaHall zal1'></div>
 
 
   <script src="js/libraries/jquery-3.2.1.min.js"></script>
-  <script type="text/javascript" src="js/libraries/slick.js"></script>
   <script type="text/javascript">
-    $(document).ready(function(){
-      $(".center").slick({
-        infinite: true,
-        centerMode: true,
-        slidesToShow: 3,
-        slidesToScroll: 1
-      });
-    });
+  // план зала по рядам общая вместительность 300 мест
+// планов может быть и больше... и разные...
+var cinemaHall1 = {
+    row: [20, 18, 16, 14, 12, 10]
+  };
+  cinemaHallMap = '';
+  var rows = cinemaHall1.row.length;
+$.each(cinemaHall1.row, function(row, numberOfSeats) {
+  cinemaHallRow = '';
+
+  for (i = 1; i <= numberOfSeats; i++) {
+    // собираем ряды
+    cinemaHallRow += '<div class="seat" data-row="' +
+      i + '" data-seat="' +
+      i + '">&nbsp;'+i+'</div>';
+  }
+  //собираем зал с проходами между рядами
+  cinemaHallMap +='<div class="rowNumber">'+rows+' </div>'+ cinemaHallRow + '<div class="passageBetween">&nbsp;</div>';
+  rows--;
+});
+
+//заполняем в html зал номер 1
+$('.zal1').html(cinemaHallMap);
+// тут по клику определяем что место выкуплено
+$('.seat').on('click', function(e) {
+  // если первый раз кликнули билет выкупили,
+  // если повторно значит вернули билет
+  $(e.currentTarget).toggleClass('bay');
+  //показываем сколько билетов выкуплено
+  showBaySeat();
+});
+
+function showBaySeat() {
+  result = '';
+  //ищем все места купленные и показываем список выкупленных мест
+  $.each($('.seat.bay'), function(key, item) {
+    result += '<div class="ticket">Ряд: ' +
+      $(item).data().row + ' Место:' +
+      $(item).data().seat + '</div>';
+  });
+}
   </script>
 
   </body>
