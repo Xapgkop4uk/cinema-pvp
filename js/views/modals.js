@@ -30,13 +30,17 @@ function showLoginModal(){
     .append($('<div class="modal-content" style="max-width: 400px; padding:0px;">')
       .append($('<div id="Content">'))));
     LoginForm(true);
-  $('#close').click(function(){
-    $('#EditModal').remove();
+
+
+  $('.modal-content').click(function(e){
+    e.stopPropagation();
   });
-  $('#accept').click(function(){
-    element.innerText = $('#text-area-editor').val();
-    $('#EditModal').remove();
+
+  $('#LoginModal').on('click', function (e) {
+    $('#LoginModal').remove();
   });
+
+
 }
 
 function LoginForm(login){
@@ -58,8 +62,8 @@ function LoginForm(login){
 }
 function userSignUpForm(){
   $('#form-login > .container').empty();
-  $('#form-login > #sign-up').css("background-color","#12005e");
-  $('#form-login > #registration').css("background-color","rgb(0, 0, 0, 0.0)");
+  $('#form-login > #sign-up').css("background"," linear-gradient(to right bottom, rgba(105, 5, 1, 0.8), rgba(0, 0, 0, 0)");
+  $('#form-login > #registration').css("background","unset");
   var container = $('<form>')
       .append($('<div class="group">')
         .append($('<input class="input-signup" type="text" name="login" required>'))
@@ -71,7 +75,7 @@ function userSignUpForm(){
         .append($('<span class="bar">'))
         .append($('<label class="label-text">')
           .html('Пароль')))
-      .append($('<button class="btn btn-submit" type="button" onclick="userLogin(this.form)">')
+      .append($('<button class="panel-btn" type="button" onclick="userLogin(this.form)">')
         .append($('<span>')
           .html('Войти')));
   $('#form-login > .container').append(container);
@@ -80,8 +84,8 @@ function userSignUpForm(){
 function userRegistrationForm(){
 
   $('#form-login > .container').empty();
-  $('#form-login > #registration').css("background-color","rgb(34, 92, 90, 0.8)");
-  $('#form-login > #sign-up').css("background-color","rgb(0, 0, 0, 0)");
+  $('#form-login > #registration').css("background"," linear-gradient(to left bottom, rgba(105, 5, 1, 0.8), rgba(0, 0, 0, 0)");
+  $('#form-login > #sign-up').css("background","unset");
   var container = $('<form>')
       .append($('<div class="group">')
         .append($('<input type="text" name="email" required>'))
@@ -103,7 +107,7 @@ function userRegistrationForm(){
         .append($('<span class="bar">'))
         .append($('<label class="label-text">')
           .html('Повторите пароль')))
-      .append($('<button class="btn btn-submit" type="button" onclick="userRegistration(this.form);alert(document.cookie);">')
+      .append($('<button class="panel-btn" type="button" onclick="userRegistration(this.form);alert(document.cookie);">')
         .append($('<span>')
           .html('Регистрация')));
 

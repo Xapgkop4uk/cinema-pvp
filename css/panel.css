@@ -18,6 +18,25 @@
   padding: 0px;
   width: 100%;
 }
+.panel-arrow{
+    position: absolute;
+    font-size: 30px;
+    color: rgb(255,255,255);
+    border: none;
+    top: 50%;
+    z-index: 1;
+    cursor: pointer;
+}
+
+.panel-prev-btn{
+  left: 33%;
+  background: linear-gradient(to right, rgb(105, 5, 1),rgb(0,0,0));
+}
+
+.panel-next-btn{
+  right: 33%;
+  background: linear-gradient(to left, rgb(105, 1, 1),rgb(0,0,0));
+}
 
 .panel-btn{
   width: 60%;
@@ -47,6 +66,7 @@
 .panel-comment{
   color:silver;
   text-align: center;
+  height: 100px
 
 }
 
@@ -57,6 +77,8 @@
 
 .panel-btn:hover{
   background: black;
+  box-shadow: unset;
+  border: 1px solid #5d0505;
 }
 .panel-img{
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.8);

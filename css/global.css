@@ -66,7 +66,7 @@ span:hover.span-menu{
   margin: 0 auto;
   width: 400px;
   color: white;
-  background-color: #4a138c;
+  background-image:url('../src/images/background.jpg');
 }
 
 #form-login #select-intro{
@@ -133,7 +133,7 @@ input{
   left: 10%;
   border: none;
   border-bottom: 1px solid white;
-  background-color: white;
+  background-color: rgba(0,0,0,0);
 }
 input:focus{
   outline: none;
@@ -201,7 +201,7 @@ input:focus ~ label, input:valid ~ label {
   width: 0;
   bottom: 0;
   position: absolute;
-  background: grey;
+  background: rgb(105,5,1);
   transition: 0.2s ease all;
   -moz-transition: 0.2s ease all;
   -webkit-transition: 0.2s ease all;

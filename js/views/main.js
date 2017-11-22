@@ -18,10 +18,10 @@ function drawMainPage(){
               .append($('<p class="panel-comment">')
                 .html(element.comment)))
             .append($('<li class="panel-li">')
-              .append($('<button type="button" onclick="aboutFilm(\''+element.objectId+'\')" class="panel-btn panel-btn-about">')
+              .append($('<button type="button" onclick="aboutFilm('+element.obkectId+')" class="panel-btn panel-btn-about">')
                 .html('Фильм')))
             .append($('<li class="panel-li">')
-              .append($('<button type="button" class="panel-btn panel-btn-session" onclick="drawSessionsSelection(\''+element.name+'\')">')
+              .append($('<button type="button" class="panel-btn panel-btn-session">')
                 .html('Сеансы')))));
       });
       $('body').append(scroller);
@@ -31,7 +31,19 @@ function drawMainPage(){
         centerMode: true,
         slidesToShow: 3,
         slidesToScroll: 1,
+        prevArrow:'<button type="button" class="panel-arrow panel-prev-btn"><i class="material-icons">&#xE314;</i></button>',
+        nextArrow:'<button type="button" class="panel-arrow panel-next-btn"><i class="material-icons">&#xE315;</i></button>'
       });
+
+      $(".panel-arrow").click((context)=>{
+         $('.panel-next-btn').css('display','none');
+         $('.panel-prev-btn').css('display','none');
+
+        setTimeout(()=> {
+           $('.panel-next-btn').css('display','unset');
+           $('.panel-prev-btn').css('display','unset');
+         }, 500);
+      })
     }
   });
   var page = $('<ul class="header1 header">').append('<li class="header2_left"><span class="header2_admin" onclick="drawMainPage()" style="cursor:pointer">Кинотеатр</span></li>    <li><button type="button"');
@@ -51,6 +63,7 @@ function drawMainPage(){
   $('body').append(page);
 
 };
+
 
 function addZero(i) {
     if (i < 10) {
