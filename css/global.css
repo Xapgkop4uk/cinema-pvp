@@ -59,7 +59,7 @@ span.span-menu, span.span-menu-noselection{
 }
 
 span:hover.span-menu{
-  background-color: #12005e;
+  background:radial-gradient(100% 40%,rgb(76,4,7),rgb(35,7,8));
 }
 #form-login{
   position: relative;

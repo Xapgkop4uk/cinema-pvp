@@ -14,7 +14,7 @@ function drawCinema(first, id){
   });
 
   var cinemaHall = {
-      row:first? firsHall:secondHall
+      row:first==1? firsHall:secondHall
     };
 
   cinemaHallMap = '';

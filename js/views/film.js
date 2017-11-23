@@ -13,31 +13,116 @@ function aboutFilm(id){
 
 function drawSessionsSelection(movie){
   $.ajax({
-    url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/session?where=time%3E"+parseInt(new Date().getTime())+"%20AND%20movie%3D'"+movie+"'",
+    url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/session?where=time%3E"+parseInt(new Date().getTime())+"%20AND%20movie%3D'"+movie+"'&sortBy=time",
     type: "GET",
     success: function(result){
       console.log(result);
-      $('body').append($('<div id="CinemaModal" style="z-index:100" class="infoModal">')
-        .append($('<div class="modal-content" style="padding:0px;">')
+      var titleDate='';
+      $('body').append($('<div id="CinemaModal" style="z-index:100;" class="infoModal">')
+        .append($('<div class="modal-content" style="padding:0px; margin:0 auto;">')
           .append($('<div id="Content">'))));
-        var first = true;
-      result.forEach((element)=>{
-        if(first){
-          var date = new Date(element.time);
-          $('#Content').append($('<h3>').html("Ближайший сеанс: "+addZero(date.getDate())+" "+getMonth(date.getMonth())+" "+addZero(date.getHours())+':'+addZero(date.getMinutes())))
-          .append($('<div class="cinemaHall zal1">'));
-          drawCinema(first.room == 1, element.objectId);
-          $('#Content')
-          .append($('<h4>').html("Цена билета: "+element.price+" &#8381;"))
-          .append($('<button class="panel-btn" onclick="buyTickets(\''+element.objectId+'\')">').html('Купить билеты'));
-          first = false;
+      var first = true;
+      if(result.length==0)
+      {
         $('#Content')
-        .append($('<h4>').html("Другие сеансы"));
-        }
+        .append($('<h4>').html("В данный момент сеансы для данного фильма отсутствуют."))
+        .append($('<h4>').html("Пожалуйста, попробуйте позднее."));
+      }
+      else {
+        result.forEach((element)=>{
+          console.log(element.room);
+          if(first){
+            var date = new Date(element.time);
+            $('#Content').append($('<h3>').html("Ближайший сеанс: "+addZero(date.getDate())+" "+getMonth(date.getMonth())+" "+addZero(date.getHours())+':'+addZero(date.getMinutes())))
+            .append($('<div class="cinemaHall zal1">'));
+            drawCinema(element.room, element.objectId);
+            $('#Content')
+            .append($('<h4>').html("Цена билета: "+element.price+" &#8381;"))
+            .append($('<button class="panel-btn" onclick="buyTickets(\''+element.objectId+'\')">').html('Купить билеты'));
+            first = false;
+          $('#Content')
+          .append($('<h4>').html("Другие сеансы"));
+          }
+          else{
+              date = new Date(element.time);
+              if(titleDate != addZero(date.getDate())+" "+getMonth(date.getMonth())){
+                titleDate = addZero(date.getDate())+" "+getMonth(date.getMonth());
+                $('#Content')
+                .append($('<div>')
+                  .append($('<div class="session-date">')
+                    .append($('<span class="date-title">')
+                      .html(titleDate)))
+                    .append($('<div class="sessions-list">')));
+              }
+              $('.sessions-list').last()
+              .append($('<button class="session-btn"  onclick="drawSelectedSession(\''+element.movie+'\',\''+element.objectId+'\')">').html(addZero(date.getHours())+':'+addZero(date.getMinutes())));
 
+          }
+        });
+      }
+      $('.modal-content').click(function(e){
+        e.stopPropagation();
+      });
+
+      $('#CinemaModal').on('click', function (e) {
+        $('#CinemaModal').remove();
       });
     }
   })
+}
+
+function drawSelectedSession(movie,id){
+  $('#Content').empty();
+
+  $.ajax({
+    url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/session/"+id,
+    type: "GET",
+      success: function(element){
+        var date = new Date(element.time);
+        $('#Content').append($('<h3>').html("Выбранный сеанс: "+addZero(date.getDate())+" "+getMonth(date.getMonth())+" "+addZero(date.getHours())+':'+addZero(date.getMinutes())))
+        .append($('<div class="cinemaHall zal1">'));
+        drawCinema(element.room, element.objectId);
+        $('#Content')
+        .append($('<h4>').html("Цена билета: "+element.price+" &#8381;"))
+        .append($('<button class="panel-btn" onclick="buyTickets(\''+element.objectId+'\')">').html('Купить билеты'));
+        $('#Content')
+        .append($('<h4>').html("Другие сеансы"));
+
+
+        $.ajax({
+          url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/session?where=time%3E"+parseInt(new Date().getTime())+"%20AND%20movie%3D'"+movie+"'&sortBy=time",
+          type: "GET",
+          success: function(result){
+            console.log(result);
+            var titleDate='';
+              result.forEach((element)=>{
+                console.log(element.room);
+                if(element.objectId!= id){
+                    date = new Date(element.time);
+                    if(titleDate != addZero(date.getDate())+" "+getMonth(date.getMonth())){
+                      titleDate = addZero(date.getDate())+" "+getMonth(date.getMonth());
+                      $('#Content')
+                      .append($('<div>')
+                        .append($('<div class="session-date">')
+                          .append($('<span class="date-title">')
+                            .html(titleDate)))
+                          .append($('<div class="sessions-list">')));
+                    }
+                    $('.sessions-list').last()
+                    .append($('<button class="session-btn"  onclick="drawSelectedSession(\''+element.movie+'\',\''+element.objectId+'\')">').html(addZero(date.getHours())+':'+addZero(date.getMinutes())));
+                  }
+              });
+            $('.modal-content').click(function(e){
+              e.stopPropagation();
+            });
+
+            $('#CinemaModal').on('click', function (e) {
+              $('#CinemaModal').remove();
+            });
+          }
+        });
+  }
+  });
 }
 
 function buyTickets(id)
