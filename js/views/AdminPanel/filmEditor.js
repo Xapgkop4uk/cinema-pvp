@@ -86,49 +86,7 @@ function drawAddingSession(){
         select.append('<option value="'+element.name+ '">'+element.name+'</option>');
       });
 
-      $('.sel').each(function() {
-        $(this).children('select').css('display', 'none');
-        var current = $(this);
-        $(this).find('option').each(function(i) {
-          if (i == 0) {
-            current.prepend($('<div>', {
-              class: current.attr('class').replace(/sel/g, 'sel__box')
-            }));
-
-            var placeholder = $(this).text();
-            current.prepend($('<span>', {
-              class: current.attr('class').replace(/sel/g, 'sel__placeholder'),
-              text: placeholder,
-              'data-placeholder': placeholder
-            }));
-
-            return;
-          }
-
-          current.children('div').append($('<span>', {
-            class: current.attr('class').replace(/sel/g, 'sel__box__options'),
-            text: $(this).text()
-          }));
-        });
-      });
-
-      // Toggling the `.active` state on the `.sel`.
-      $('.sel').click(function() {
-        $(this).toggleClass('active');
-      });
-
-      // Toggling the `.selected` state on the options.
-      $('.sel__box__options').click(function() {
-        var txt = $(this).text();
-        var index = $(this).index();
-
-        $(this).siblings('.sel__box__options').removeClass('selected');
-        $(this).addClass('selected');
-
-        var currentSel = $(this).closest('.sel');
-        currentSel.children('.sel__placeholder').text(txt);
-        currentSel.children('select').prop('selectedIndex', index + 1);
-      });
+      ReDrawSelect();
     }
   });
 
@@ -193,50 +151,96 @@ function drawAddingMovie(){
 }
 
 function drawRemovingMovie(){
-
+  var data={};
   $.ajax({
     url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/movies",
     type: "GET",
     success: function(result){
-      var table =$('<table>')
-        .append($('<tr>')
-          .append($('<th>')
-            .html('Постер'))
-          .append($('<th>')
-            .html('Название'))
-          .append($('<th>')
-            .html('Комментарий'))
-          .append($('<th>')
-            .html('Оценка'))
-          .append($('<th>')
-            .html('Оценок'))
-          .append($('<th>')
-            .html('Просмотров'))
-          .append($('<th>')));
-      result.forEach((element)=>{
-        var date = new Date(element.time);
+
+      var select = $('<div class="sel">')
+      .append($('<span class="sel__placeholder" data-placeholder="Фильм">Фильм</span>'))
+      .append($('div class="sel__box">')
+        .append($('<span class="sel__box__options selected">Batman</span>Гарри Потный</span><span class="sel__box__options">True Detactive</span><span class="sel__box__options">Крестный отец</span></div></div>';
+      var first = true;
+      var content;
+       result.forEach((element)=>{
+        data[element.name] = element;
+        select.append($('<span class="sel__box__options">').html(element.name));
+        if(first){
+        content = $('<div >')
+        .html('<img class="poster" src="https://api.backendless.com/F4938450-8412-F432-FF30-7FF933EE1300/9D5C7C66-9B9D-35B7-FF7F-5EB8144C5C00/files/images/'+element.objectId+'.jpg"/>')
+
+        }
         var row = $('<tr id="'+element.objectId+'">')
-          .append($('<td class="change" id="change-poster">')
-            .html('<img class="poster" src="https://api.backendless.com/F4938450-8412-F432-FF30-7FF933EE1300/9D5C7C66-9B9D-35B7-FF7F-5EB8144C5C00/files/images/'+element.objectId+'.jpg"/>'))
-          .append($('<td class="change" onclick="showEditModal(this)" id="change-movie-name">')
-            .html(element.name))
-          .append($('<td class="change"  onclick="showEditModal(this)" id="change-movie-comment">')
-            .html(element.comment))
-          .append($('<td>')
-            .html(element.mark))
-          .append($('<td>')
-            .html(element.marks))
-          .append($('<td>')
-            .html(element.views))
-          .append($('<td>')
-            .html('<button type="button" class="btn" onclick="deleteMovie('+"'"+element.objectId+"'" +')"><span class="labelTableButton">Удалить</span></button>')
-            .append('<button type="button" class="btn" onclick="editMovie('+"'"+element.objectId+"'" +')"><span class="labelTableButton">Применить</span></button>'));
-        table.append(row);
+            ;
       });
-      right = right.append(table);
+      right = right.append(select).append(content);
+      $('.sel').click(function() {
+        $(this).toggleClass('active');
+      });
+
+      // Toggling the `.selected` state on the options.
+      $('.sel__box__options').click(function() {
+        var txt = $(this).text();
+        var index = $(this).index();
+
+        $(this).siblings('.sel__box__options').removeClass('selected');
+        $(this).addClass('selected');
+
+        var currentSel = $(this).closest('.sel');
+        currentSel.children('.sel__placeholder').text(txt);
+      });
+      console.log(data);
     }
   });
+
   var right = $('<div class="right">').append('<li class="list-header"><span style="margin:20px;">Редактирование фильмов</div>');
 
   $('.layout').append(right);
+}
+
+function ReDrawSelect(){
+    $('.sel').each(function() {
+    $(this).children('select').css('display', 'none');
+    var current = $(this);
+    $(this).find('option').each(function(i) {
+      if (i == 0) {
+        current.prepend($('<div>', {
+          class: current.attr('class').replace(/sel/g, 'sel__box')
+        }));
+
+        var placeholder = $(this).text();
+        current.prepend($('<span>', {
+          class: current.attr('class').replace(/sel/g, 'sel__placeholder'),
+          text: placeholder,
+          'data-placeholder': placeholder
+        }));
+
+        return;
+      }
+
+      current.children('div').append($('<span>', {
+        class: current.attr('class').replace(/sel/g, 'sel__box__options'),
+        text: $(this).text()
+      }));
+    });
+  });
+
+  // Toggling the `.active` state on the `.sel`.
+  $('.sel').click(function() {
+    $(this).toggleClass('active');
+  });
+
+  // Toggling the `.selected` state on the options.
+  $('.sel__box__options').click(function() {
+    var txt = $(this).text();
+    var index = $(this).index();
+
+    $(this).siblings('.sel__box__options').removeClass('selected');
+    $(this).addClass('selected');
+
+    var currentSel = $(this).closest('.sel');
+    currentSel.children('.sel__placeholder').text(txt);
+    currentSel.children('select').prop('selectedIndex', index + 1);
+  });
 }

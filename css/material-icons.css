@@ -34,3 +34,7 @@
   /* Support for IE. */
   font-feature-settings: 'liga';
 }
+
+.material-icons:hover{
+  background: rgba(0,0,0,0);
+}
