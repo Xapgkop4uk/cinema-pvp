@@ -150,31 +150,55 @@ function drawAddingMovie(){
 
 }
 
-function drawRemovingMovie(){
+function drawRemovingMovie(movie){
   var data={};
   $.ajax({
     url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/movies",
     type: "GET",
     success: function(result){
-
-      var select = $('<div class="sel">')
-      .append($('<span class="sel__placeholder" data-placeholder="Фильм">Фильм</span>'))
-      .append($('div class="sel__box">')
-        .append($('<span class="sel__box__options selected">Batman</span>Гарри Потный</span><span class="sel__box__options">True Detactive</span><span class="sel__box__options">Крестный отец</span></div></div>';
+      var select = $('<div class="sel">');
+      var selectBox = $('<div class="sel__box">');
       var first = true;
       var content;
        result.forEach((element)=>{
         data[element.name] = element;
-        select.append($('<span class="sel__box__options">').html(element.name));
-        if(first){
-        content = $('<div >')
-        .html('<img class="poster" src="https://api.backendless.com/F4938450-8412-F432-FF30-7FF933EE1300/9D5C7C66-9B9D-35B7-FF7F-5EB8144C5C00/files/images/'+element.objectId+'.jpg"/>')
 
+        selectBox.append($('<span class="sel__box__options">').html(element.name));
+        if(first){
+        console.log(element);
+        select.append($('<span class="sel__placeholder" data-placeholder="Фильм">'+element.name+'</span>'));
+        content = $('<div class="content">')
+        .html('<img class="poster" src="https://api.backendless.com/F4938450-8412-F432-FF30-7FF933EE1300/9D5C7C66-9B9D-35B7-FF7F-5EB8144C5C00/files/images/'+element.objectId+'.jpg"/>');
+
+        var container = $('<div>').append($('<form class="admin-form" style="width:unset">')
+            .append($('<div class="group">')
+              .append($('<input type="text" name="date" required>'))
+              .append($('<span class="bar bar-adm">'))
+              .append($('<label class="label-text">')
+                .html('Дата')))
+            .append($('<div class="group">')
+              .append($('<input type="text" name="time" required>'))
+              .append($('<span class="bar bar-adm">'))
+              .append($('<label class="label-text">')
+                .html('Время')))
+            .append($('<div class="group">')
+              .append($('<input type="text" name="price" required>'))
+              .append($('<span class="bar bar-adm">'))
+              .append($('<label class="label-text">')
+                .html('Цена')))
+            .append($('<div class="group">')
+              .append($('<button class="btn btn-admin" onclick="addSession(this.form)" type="button" style="right:0px;bottom:unset;">')
+                .append($('<span>')
+                  .html('Изменить')))));
+
+          content.append(container);
+
+        first = false;
         }
         var row = $('<tr id="'+element.objectId+'">')
             ;
       });
-      right = right.append(select).append(content);
+      right.append(select.append(selectBox)).append(content);
       $('.sel').click(function() {
         $(this).toggleClass('active');
       });
@@ -183,9 +207,35 @@ function drawRemovingMovie(){
       $('.sel__box__options').click(function() {
         var txt = $(this).text();
         var index = $(this).index();
+        content = $('.content').empty()
+        .html('<img class="poster" src="https://api.backendless.com/F4938450-8412-F432-FF30-7FF933EE1300/9D5C7C66-9B9D-35B7-FF7F-5EB8144C5C00/files/images/'+data[txt].objectId+'.jpg"/>')
+
+          var container = $('<div>').append($('<form class="admin-form">')
+              .append($('<div class="group">')
+                .append($('<div class="sel">')
+                  .append(selectRoom)))
+              .append($('<div class="group">')
+                .append($('<input type="text" name="date" required>'))
+                .append($('<span class="bar bar-adm">'))
+                .append($('<label class="label-text">')
+                  .html('Дата')))
+              .append($('<div class="group">')
+                .append($('<input type="text" name="time" required>'))
+                .append($('<span class="bar bar-adm">'))
+                .append($('<label class="label-text">')
+                  .html('Время')))
+              .append($('<div class="group">')
+                .append($('<input type="text" name="price" required>'))
+                .append($('<span class="bar bar-adm">'))
+                .append($('<label class="label-text">')
+                  .html('Цена'))
+              .append($('<button class="btn btn-admin" onclick="addSession(this.form)" type="button">')
+                .append($('<span>')
+                  .html('Добавить')))));
 
         $(this).siblings('.sel__box__options').removeClass('selected');
         $(this).addClass('selected');
+
 
         var currentSel = $(this).closest('.sel');
         currentSel.children('.sel__placeholder').text(txt);

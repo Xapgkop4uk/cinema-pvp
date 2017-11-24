@@ -2,6 +2,7 @@ body, html {
     padding : 0px;
     margin : 0px;
     height : 100%;
+    min-width: 1000px;
     font-family: 'Playfair Display', serif;
     font-family: 'Fira Sans', sans-serif;
     list-style: none;
@@ -408,6 +409,7 @@ li.dropdown {
   height: 100%;
   margin: 20px;
   border-bottom: 1px solid #44494e;
+  display: inline-flex;
 }
 
 .right{
