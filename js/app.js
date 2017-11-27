@@ -189,10 +189,13 @@ function deleteMovie(id){
 }
 
 function editMovie(id){
-  var row = $('#'+id);
   var movie ={
-    name:row.find('#change-movie-name')[0].innerText,
-    comment:row.find('#change-movie-comment')[0].innerText
+    name:$('#movie-'+id)[0].value,
+    country:$('#country-'+id)[0].value,
+    category:$('#category-'+id)[0].value,
+    length:$('#length-'+id)[0].value,
+    comment:$('#comment-'+id)[0].value,
+    description:$('#description-'+id)[0].value
   }
 
   $.ajax({

@@ -9,7 +9,7 @@ function drawMainPage(){
       result.forEach((element)=>{
         scroller.append($('<div>')
           .append($('<ul class="panel-ul">')
-            .append($('<li class="panel-li" style="height:60%">')
+            .append($('<li class="panel-li" style="height:300px">')
               .append($('<img src="https://api.backendless.com/F4938450-8412-F432-FF30-7FF933EE1300/9D5C7C66-9B9D-35B7-FF7F-5EB8144C5C00/files/images/'+element.objectId+'.jpg" class="panel-img">')))
             .append($('<li class="panel-li">')
               .append($('<h2 class="panel-header">')
@@ -17,10 +17,10 @@ function drawMainPage(){
             .append($('<li class="panel-li">')
               .append($('<p class="panel-comment">')
                 .html(element.comment)))
-            .append($('<li class="panel-li"             style="position:absolute;bottom:80px">')
+            .append($('<li class="panel-li">')
               .append($('<button type="button" onclick="aboutFilm(\''+element.obkectId+'\')" class="panel-btn panel-btn-about">')
                 .html('Фильм')))
-            .append($('<li class="panel-li" style="position:absolute;bottom:30px">')
+            .append($('<li class="panel-li">')
               .append($('<button type="button" onclick="drawSessionsSelection(\''+element.name+'\')" class="panel-btn panel-btn-session">')
                 .html('Сеансы')))));
       });
