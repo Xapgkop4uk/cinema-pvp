@@ -18,7 +18,7 @@ function drawMainPage(){
               .append($('<p class="panel-comment">')
                 .html(element.comment)))
             .append($('<li class="panel-li">')
-              .append($('<button type="button" onclick="aboutFilm(\''+element.obkectId+'\')" class="panel-btn panel-btn-about">')
+              .append($('<button type="button" onclick="aboutFilm(\''+element.objectId+'\')" class="panel-btn panel-btn-about">')
                 .html('Фильм')))
             .append($('<li class="panel-li">')
               .append($('<button type="button" onclick="drawSessionsSelection(\''+element.name+'\')" class="panel-btn panel-btn-session">')

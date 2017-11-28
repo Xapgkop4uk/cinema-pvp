@@ -1,6 +1,7 @@
 body, html {
     padding : 0px;
     margin : 0px;
+    color:white;
     height : 100%;
     min-width: 1000px;
     font-family: 'Playfair Display', serif;
@@ -24,6 +25,11 @@ h3{
 h4{
   color:silver;
   text-align: center;
+}
+
+p{
+  padding: 5px;
+  padding-bottom: 0;
 }
 
 form {
@@ -410,23 +416,4 @@ li.dropdown {
   margin: 20px;
   border-bottom: 1px solid #44494e;
   display: inline-flex;
-}
-
-.right{
-  position: absolute;
-  background-color: white;
-  left: 230px;
-  top: 0;
-  border: 1px solid #44494e;
-  margin: 20px;
-}
-
-.right .list-header{
-  width: 100%;
-  padding: 20px 0px;
-}
-
-h2.right{
-  margin-left: 20px;
-  background-color: #ccc;
 }

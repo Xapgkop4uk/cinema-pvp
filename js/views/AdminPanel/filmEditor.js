@@ -248,7 +248,10 @@ function DrawCurrentFilmProperies(element){
   var content;
   var foot;
 
-  element.country = (element.country==null||typeof(element.country) == undefined) ?"":element.country;
+  for(var key in element)
+  {
+      if(element[key] == null || typeof(element[key]) == undefined) element[key] = "";
+  }
 
   content = $('<div class="content" style="border:none">')
   .append($('<div style="width:320px; text-align:center;">')

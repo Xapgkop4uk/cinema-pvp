@@ -4,9 +4,22 @@ function aboutFilm(id){
     type: "GET",
     success: function(result){
         console.log(result);
-        $('body').append($('<div id="LoginModal" style="z-index:100" class="infoModal">')
-          .append($('<div class="modal-content" style="max-width: 400px; padding:0px;">')
-            .append($('<div id="Content">'))));
+        $('body').append($('<div id="CinemaModal" style="z-index:100;" class="infoModal">')
+          .append($('<div class="modal-content" style="padding:0px; margin:0 auto;">')
+            .append($('<div id="Content" style="display:inline-flex;">')
+              .append($('<div style="width:320px; text-align:center;">')
+                .html('<img class="poster" src="https://api.backendless.com/F4938450-8412-F432-FF30-7FF933EE1300/9D5C7C66-9B9D-35B7-FF7F-5EB8144C5C00/files/images/'+result.objectId+'.jpg"/>'))
+              .append($('<div>')
+                .append($('<div class="group" style="display:inline-flex; margin-bottom:0">')
+                  .append($('<p class="property" >')
+                    .html('Название:'))
+                  .append($('<p class="prop-value">')
+                    .html(result.name)))
+                .append($('<div class="group" style="display:inline-flex; margin-bottom:0">')
+                  .append($('<p class="property" >')
+                    .html('Жанр:'))
+                  .append($('<p class="prop-value">')
+                    .html(result.name)))))));
       }
   });
 }
