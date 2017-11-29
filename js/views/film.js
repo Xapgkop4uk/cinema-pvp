@@ -3,23 +3,45 @@ function aboutFilm(id){
     url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/movies/"+id,
     type: "GET",
     success: function(result){
-        console.log(result);
-        $('body').append($('<div id="CinemaModal" style="z-index:100;" class="infoModal">')
-          .append($('<div class="modal-content" style="padding:0px; margin:0 auto;">')
-            .append($('<div id="Content" style="display:inline-flex;">')
-              .append($('<div style="width:320px; text-align:center;">')
-                .html('<img class="poster" src="https://api.backendless.com/F4938450-8412-F432-FF30-7FF933EE1300/9D5C7C66-9B9D-35B7-FF7F-5EB8144C5C00/files/images/'+result.objectId+'.jpg"/>'))
-              .append($('<div>')
-                .append($('<div class="group" style="display:inline-flex; margin-bottom:0">')
-                  .append($('<p class="property" >')
-                    .html('Название:'))
-                  .append($('<p class="prop-value">')
-                    .html(result.name)))
-                .append($('<div class="group" style="display:inline-flex; margin-bottom:0">')
-                  .append($('<p class="property" >')
-                    .html('Жанр:'))
-                  .append($('<p class="prop-value">')
-                    .html(result.name)))))));
+      console.log(result);
+      $('body').append($('<div id="CinemaModal" style="z-index:100;" class="infoModal">')
+        .append($('<div class="modal-content" style="padding:0px; margin:0 auto; border:1px solid #5d0505">')
+          .append($('<div id="Сontent" style="display:inline-flex; margin:20px">')
+            .append($('<div style="width:320px; text-align:center;">')
+              .html('<img class="poster" style="box-shadow: 0px 8px 16px 2px #5d0505;" src="https://api.backendless.com/F4938450-8412-F432-FF30-7FF933EE1300/9D5C7C66-9B9D-35B7-FF7F-5EB8144C5C00/files/images/'+result.objectId+'.jpg"/>'))
+            .append($('<div>')
+              .append($('<div class="group about-group">')
+                .append($('<p class="property" >')
+                  .html('Название: ')
+                .append($('<t class="prop-value">')
+                  .html(result.name))))
+              .append($('<div class="group about-group">')
+                .append($('<p class="property" >')
+                  .html('Жанр: ')
+                .append($('<t class="prop-value">')
+                  .html(result.category))))
+              .append($('<div class="group about-group">')
+                .append($('<p class="property" >')
+                  .html('Страна: ')
+                .append($('<t class="prop-value">')
+                  .html(result.country))))
+              .append($('<div class="group about-group">')
+                .append($('<p class="property" >')
+                  .html('Продолжительность: ')
+                .append($('<t class="prop-value">')
+                  .html(result.length))))
+              .append($('<div class="group about-group">')
+                .append($('<p class="property" >')
+                  .html('Просмотров: ')
+                .append($('<t class="prop-value">')
+                  .html(result.views))))
+              .append($('<div class="group about-group">')
+                .append($('<p class="property" >')
+                  .html('Рейтинг: ')
+                .append($('<t class="prop-value">')
+                  .html(result.mark+"/10"))))))));
+        $('.modal-content').append($('<div style="padding:20px;">')
+          .html(result.description));
       }
   });
 }
