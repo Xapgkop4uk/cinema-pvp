@@ -9,7 +9,7 @@
     overflow: auto;
 }
 
-.infoModal .modal-content i{
+.upload{
   position:absolute;
   font-size: 30px;
   color: #1a1f23;

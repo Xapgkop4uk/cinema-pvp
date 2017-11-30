@@ -100,6 +100,10 @@ span .info{
   font-size: 20px;
   cursor: pointer;
 }
+.red-line{
+  border: 1px solid #5d0505;
+  margin:20px;
+}
 
 #sign-up{
   left: 0px
@@ -361,7 +365,7 @@ li.dropdown {
 }
 
 .filmRedactorMenu{
-  display: inline-grid;
+  display: inherit;
   color: black;
   position: relative;
   margin: 20px;
