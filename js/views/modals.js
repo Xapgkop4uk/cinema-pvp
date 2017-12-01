@@ -1,7 +1,18 @@
 function showModalInfo(message){
   $('body').append($('<div id="infoModal" style="z-index:100" class="infoModal">')
-    .append($('<div class="modal-content">')
+    .append($('<div class="modal-content" style="color:black;">')
       .append('<i id="close" class="material-icons upload" style="right: 5px; top:5px;bottom:unset">close</i>')
+        .append($('<p>')
+          .html(message))));
+  $('#close').click(function(){
+    $('#infoModal').remove();
+  })
+}
+
+function showLoginInfo(message){
+  $('body').append($('<div id="infoModal" style="z-index:100" class="infoModal">')
+    .append($('<div class="info-login-modal-content">')
+      .append('<i id="close" class="material-icons upload" style="right: 5px; top:5px;bottom:unset;color:white;">close</i>')
         .append($('<p>')
           .html(message))));
   $('#close').click(function(){
@@ -22,6 +33,49 @@ function showEditModal(element){
   $('#accept').click(function(){
     element.innerText = $('#text-area-editor').val();
     $('#EditModal').remove();
+  });
+}
+
+function showCardInput(price, id){
+  $('body').append($('<div id="CardModal" style="z-index:100" class="CardModal" style="color:black;">')
+    .append($('<div class="CardModal-content">')
+      .append('<i id="close" class="material-icons upload" style="right: 5px; top:5px;bottom:unset;color:rgb(100,118,127);border:unset; box-shadow:unset;">close</i>')
+        .append($('<p class="card-header">')
+          .html('Оплата'))));
+  $('.CardModal-content').append($('<div>').append($('<form class="card-form">')
+      .append($('<div style="display:inline-flex">')
+        .append($('<img src="src/images/maestro.png">'))
+        .append($('<img src="src/images/mastercard.png">'))
+        .append($('<img src="src/images/sberbank.png">'))
+        .append($('<img src="src/images/visa.png">')))
+      .append($('<div class="group" style="display:grid;margin-bottom:10px;">')
+        .append($('<span class="price" style="text-align: center;font-size:30px;">')
+        .html(price+'.00 &#8381;')))
+    .append($('<div class="group">')
+      .append($('<input type="text" class="card-input" name="NameOnCard" required>'))
+      .append($('<span class="bar bar-card">'))
+      .append($('<label class="label-text">')
+        .html('Имя на карте')))
+    .append($('<div class="group">')
+      .append($('<input type="text" class="card-input" name="number" required>'))
+      .append($('<span class="bar bar-card">'))
+      .append($('<label class="label-text">')
+        .html('Номер карты')))
+      .append($('<div style="display:inline-flex">').append($('<div class="group">')
+        .append($('<input type="text" class="card-input" name="date" style="width:60px" required>'))
+        .append($('<span class="bar bar-card" style="width:65px;">'))
+        .append($('<label class="label-text">')
+          .html('MM/YY'))).append($('<div class="group" style="margin-left:20px;">')
+        .append($('<input type="text" class="card-input" name="NameOnCard" style="width:120px" required>'))
+        .append($('<span class="bar bar-card" style="width:125px;">'))
+        .append($('<label class="label-text">')
+        .html('CVC/CVV'))))
+      .append($('<button class="btn btn-admin" onclick="  $(\'#CardModal\').remove(); buyTickets(\''+id+'\')" type="button" style="margin:auto; display:block; position:unset;">')
+        .append($('<span>')
+          .html('Купить')))));
+
+  $('#close').click(function(){
+    $('#CardModal').remove();
   });
 }
 

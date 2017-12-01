@@ -35,6 +35,10 @@ p{
 form {
   position: relative;
 }
+
+a{
+  cursor: pointer;
+}
 #menu-login{
   position: absolute;
   top: 15px;
@@ -133,23 +137,6 @@ span .info{
   margin-bottom: 30px;
 }
 
-input{
-  font-size: 18px;
-  color: white;
-  padding-top: 15px;
-  padding-bottom:: 15px;
-  display: block;
-  width: 100%;
-  right: 10%;
-  left: 10%;
-  border: none;
-  border-bottom: 1px solid white;
-  background-color: rgba(0,0,0,0);
-}
-input:focus{
-  outline: none;
-}
-
 ul{
   list-style: unset;
 }
@@ -163,11 +150,6 @@ label.label-text{
   transition: 0.2s ease all;
   -moz-transition: 0.2s ease all;
   -webkit-transition: 0.2s ease all;
-}
-
-input:focus ~ label, input:valid ~ label {
-  top: -15px;
-  font-size: 14px;
 }
 
 .admin-form{

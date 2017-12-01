@@ -3,7 +3,21 @@ function drawFilmRedactor(section){
 
   drawAdminNav('Редактор фильмов');
 
-  $('.layout').append('<div class="filmRedactorMenu"><li class="list-header">Категории</li><li class="selected"> <span onclick="drawFilmRedactor(0)">Добавить сеанс</span></li><li class=""><span onclick="drawFilmRedactor(1)">Удалить сеанс</span></li><li class="">        <span onclick="drawFilmRedactor(2)">Добавить фильм</span></li><li class"">   <span onclick="drawFilmRedactor(3)">Редактировать фильм</span></li></div>');
+  $('.layout').append($('<div class="filmRedactorMenu">')
+    .append($('<li class="list-header">')
+      .html('Категории'))
+    .append($('<li class="selected">')
+      .append($('<span onclick="drawFilmRedactor(0)">')
+        .html('Добавить сеанс')))
+    .append($('<li class="">')
+      .append($('<span onclick="drawFilmRedactor(1)">')
+        .html('Удалить сеанс')))
+    .append($('<li class="">')
+      .append($('<span onclick="drawFilmRedactor(2)">')
+        .html('Добавить фильм')))
+    .append($('<li class="">')
+      .append($('<span onclick="drawFilmRedactor(3)">')
+        .html('Редактировать фильм'))));
 
   $('li.selected').removeClass('selected');
   $('.filmRedactorMenu >li').eq(section+1).addClass("selected");
@@ -133,7 +147,7 @@ function drawAddingMovie(){
         .append($('<label class="label-text">')
           .html('Название')))
       .append($('<div class="group">')
-        .append('<div class="file-input">            <label id="click">              <i class="material-icons upload" style="position:absolute;font-size: 30px;color: #1a1f23;border: 1px solid black;z-index: 2;  box-shadow: 0 1px 4px rgba(0, 0, 0,0.4);">file_upload</i>              <input id="file_input_file" class="none" type="file" accept=".jpg, .jpeg, .png" name="image">            </label>            <div style="position: absolute;top: -8px;">              <input id="picture" name="movie" required="" readonly="" type="text">              <span class="bar bar-adm"></span>              <label id="label-picture"class="label-text">Постер</label>            </div>          </div>'))
+        .append('<div class="file-input">            <label id="click" style="top:40px;">              <i class="material-icons upload" style="position:absolute;font-size: 30px;color: #1a1f23;border: 1px solid black;z-index: 2;  box-shadow: 0 1px 4px rgba(0, 0, 0,0.4);">file_upload</i>              <input id="file_input_file" class="none" type="file" accept=".jpg, .jpeg, .png" name="image">            </label>            <div style="position: absolute;top: -8px;">              <input id="picture" name="movie" required="" readonly="" type="text">              <span class="bar bar-adm"></span>              <label id="label-picture"class="label-text">Постер</label>            </div>          </div>'))
       .append($('<div class="group">')
         .append($('<textarea name="comment" placeholder="Описание" rows="5" cols="35">'))
       .append($('<button class="btn btn-admin" onclick="addMovie(this.form)" type="button">')
@@ -175,7 +189,6 @@ function drawRemovingMovie(movie){
         $(this).toggleClass('active');
       });
 
-      // Toggling the `.selected` state on the options.
       $('.sel__box__options').click(function() {
         var txt = $(this).text();
         var index = $(this).index();
@@ -290,10 +303,15 @@ function DrawCurrentFilmProperies(element){
           .html('Короткий комментарий'))));
 
     foot =$('<div class="group">')
-      .append($('<textarea id="description-'+element.objectId+'"class="textEditArea" name="description" placeholder="Описание" rows="5" cols="35" >').html(element.description))
-      .append($('<div style="height:100px">').append($('<button class="btn btn-admin" onclick="editMovie(\''+element.objectId+'\')" type="button">')
-        .append($('<span>')
-          .html('Изменить'))));
+      .append($('<textarea id="description-'+element.objectId+'"class="textEditArea" name="description" placeholder="Описание" rows="5" cols="35" >')
+        .html(element.description))
+      .append($('<div style="height:100px">')
+        .append($('<button class="btn btn-admin" style="left:40px;" onclick="deleteMovie(\''+element.objectId+'\')" type="button">')
+          .append($('<span>')
+            .html('Удалить')))
+        .append($('<button class="btn btn-admin" onclick="editMovie(\''+element.objectId+'\')" type="button">')
+          .append($('<span>')
+            .html('Изменить'))));
 
     content.append(container);
     content=content.add(foot);

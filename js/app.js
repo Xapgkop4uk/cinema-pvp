@@ -26,6 +26,8 @@ function userRegistration(form){
       success: function(d){
         setCookie('username', d.login, COOKIE_LIVE);
         setCookie('userId', d.objectId, COOKIE_LIVE);
+        setCookie('user-token', d['user-token'], COOKIE_LIVE);
+        setCookie('user-admin', d.admin, COOKIE_LIVE);
         console.log(d);
         drawMainPage();
       }
@@ -48,9 +50,16 @@ function userLogin(form){
     success: function(d){
       setCookie('username', d.login, COOKIE_LIVE);
       setCookie('userId', d.objectId, COOKIE_LIVE);
+      setCookie('user-token',d['user-token'], COOKIE_LIVE);
+      setCookie('user-admin', d.admin, COOKIE_LIVE);
       console.log(document.cookie);
       drawMainPage();
+    },
+    error: function(d){
+      console.log(d.responseJSON);
+      showLoginInfo(d.responseJSON.message);
     }
+
   });
 };
 
@@ -59,12 +68,13 @@ function userLogout(){
   var request = $.ajax({
     url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/users/logout",
     type: "GET",
-    dataType: "json",
     beforeSend: function(xhr){
-      xhr.setRequestHeader('user-token', getCookie('userId'));
+      xhr.setRequestHeader('user-token', getCookie('user-token'));
     },
     success: function(d){
       deleteCookie('username');
+      deleteCookie('userId');
+      deleteCookie('user-token');
       deleteCookie('userId');
       console.log(d);
       drawMainPage();
@@ -145,7 +155,7 @@ function addMovie(form){
 
   var movie={
     name: form.name.value,
-    mark:10.0,
+    mark: '10.00',
     views:0,
     marks:0,
     comment:form.comment.value,
@@ -182,8 +192,14 @@ function deleteMovie(id){
         url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/files/images/"+id+".jpg",
         type: "DELETE"
       });
+
+      $.ajax({
+        url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/bulk/comments?where=movie%3D'"+id+"'",
+        type: "DELETE"
+      });
+
       showModalInfo("Фильм успешно удален!");
-      $('#'+id).remove();
+      drawRemovingMovie();
     }
   });
 }

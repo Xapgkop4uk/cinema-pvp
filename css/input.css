@@ -14,15 +14,52 @@
   position: relative;
 }
 
+
+input{
+  font-size: 18px;
+  color: white;
+  padding-top: 15px;
+  padding-bottom:: 15px;
+  display: block;
+  width: 100%;
+  right: 10%;
+  left: 10%;
+  border: none;
+  border-bottom: 1px solid white;
+  background-color: rgba(0,0,0,0);
+}
+input:focus{
+  outline: none;
+}
+
+input:focus ~ label, input:valid ~ label {
+  top: -15px;
+  font-size: 14px;
+  left:0;
+}
+
 input.input-signup{
 
   border-bottom:1px solid white;
+}
+
+.card-input{
+  color:rgb(100,118,127);
+  border-bottom: 1px solid rgb(238, 242, 244);
 }
 
 #file_input_text_div {
   width: 200px;
   margin-top: -8px;
   margin-left: 5px;
+}
+
+.bar-card {
+  width: 205px;
+
+}
+.bar-card:after, .bar-card:before {
+  background: rgb(100,118,127);
 }
 
 .none {

@@ -1,6 +1,10 @@
 function drawMainPage(){
   var panel = $('<div class="preview">');
   var scroller = $('<section class="center slider">');
+
+  $('html').css("background-image","url('src/images/background.jpg')");
+  $('body').css("background-image","url('src/images/background.jpg')");
+
   $('body').empty();
   $.ajax({
     url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/movies",
@@ -54,7 +58,7 @@ function drawMainPage(){
   }
 
   else{
-    loginMenu = loginMenu.append($('<span class="span-menu" onclick="drawAdminProfile()">')
+    loginMenu = loginMenu.append($('<span class="span-menu" onclick="drawProfile()">')
         .html(getCookie('username'))
       .add($('<span class="span-menu" onclick="userLogout()">')
         .html('Выход')));
@@ -70,4 +74,11 @@ function addZero(i) {
         i = "0" + i;
     }
     return i;
+}
+
+function drawProfile(){
+  if(getCookie('user-admin')!=0)
+    drawAdminProfile();
+  else
+    drawUserProfile();
 }

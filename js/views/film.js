@@ -9,11 +9,11 @@ function aboutFilm(id){
         type: "GET",
         success: function(result){
           result.forEach((element)=>{
-            $('.comments-list').append($('<div class="comment-body">')
-              .append($('<span>').html(element.username))
-              .append($('<span>').html(element.mark+"/10"))
-              .append($('<div class="red-line">'))
-              .append($('<div>').html(element.comment)));
+            $('.comments-list').append($('<div class="comment-body" style="position:relative">')
+              .append($('<span style="padding: 20px;color: silver;font-size: 22px;">').html(element.username))
+              .append($('<span style="position:absolute;right:60px;top:5px;">').html(element.mark+"/10").append($('<i class="material-icons star">').html('star_border')))
+              .append($('<div class="red-line" style="margin-top:0;">'))
+              .append($('<div style="margin:20px;">').html(element.comment)));
           })
         }
       });
@@ -87,7 +87,7 @@ function aboutFilm(id){
 
         $('.modal-content')
         .append($('<div class="red-line">'))
-        .append($('<h3>').html('Отзывы'));
+        .append($('<h3>').html('Отзывы'))
         .append($('<div class="comments-list">'));
 
 
@@ -103,6 +103,7 @@ function aboutFilm(id){
                 $(element).html('star_border');
               }
           });
+          chooseStars ++;
         });
 
         $('.modal-content').click(function(e){
@@ -142,8 +143,17 @@ function drawSessionsSelection(movie){
             .append($('<div class="cinemaHall zal1">'));
             drawCinema(element.room, element.objectId);
             $('#Content')
-            .append($('<h4>').html("Цена билета: "+element.price+" &#8381;"))
-            .append($('<button class="panel-btn" onclick="buyTickets(\''+element.objectId+'\')">').html('Купить билеты'));
+            .append($('<h4>').html("Цена билета: "+element.price+" &#8381;"));
+
+            if(getCookie('username') == undefined) {
+              $('#Content')
+              .append($('<div class="comment-box">')
+              .html('Для покупки билетов необходима аутентификация.'));
+            }
+            else {
+              $('#Content')
+              .append($('<button class="panel-btn" onclick="buy('+element.price+',\''+element.objectId+'\')">').html('Купить билеты'));
+            }
             first = false;
           $('#Content')
           .append($('<h4>').html("Другие сеансы"));
@@ -187,8 +197,17 @@ function drawSelectedSession(movie,id){
         .append($('<div class="cinemaHall zal1">'));
         drawCinema(element.room, element.objectId);
         $('#Content')
-        .append($('<h4>').html("Цена билета: "+element.price+" &#8381;"))
-        .append($('<button class="panel-btn" onclick="buyTickets(\''+element.objectId+'\')">').html('Купить билеты'));
+        .append($('<h4>').html("Цена билета: "+element.price+" &#8381;"));
+        if(getCookie('username') == undefined) {
+          $('#Content')
+          .append($('<div class="comment-box">')
+          .html('Для покупки билетов необходима аутентификация.'));
+        }
+        else {
+          $('#Content')
+          .append($('<button class="panel-btn" onclick="buy('+element.price+',\''+element.objectId+'\')">').html('Купить билеты'));
+        }
+
         $('#Content')
         .append($('<h4>').html("Другие сеансы"));
 
@@ -225,7 +244,7 @@ function drawSelectedSession(movie,id){
             });
           }
         });
-  }
+      }
   });
 }
 
@@ -235,7 +254,8 @@ function buyTickets(id)
       var json = {
         row:$(item).data().row,
         seat:$(item).data().seat,
-        session:id
+        session:id,
+        userId:getCookie('userId')
       };
 
       $.ajax({
@@ -283,7 +303,7 @@ function postComment(movieId){
             mark += parseInt(element.mark);
             count++;
           });
-          value = parseInt((mark/count).toFixed(2));
+          value = ((mark/count).toFixed(2));
           console.log(value);
           var updateMark ={
             mark: value,
@@ -297,11 +317,30 @@ function postComment(movieId){
             dataType: "json",
             data: JSON.stringify(updateMark),
             success: function(d){
-              $('#mark').html(value);
+              $('#mark').html(value+'/10');
+              $('.comments-list').prepend($('<div class="comment-body" style="position:relative">')
+                .append($('<span style="padding: 20px;color: silver;font-size: 22px;">').html(getCookie('username')))
+                .append($('<span style="position:absolute;right:60px;top:5px;">').html(chooseStars+"/10").append($('<i class="material-icons star">').html('star_border')))
+                .append($('<div class="red-line" style="margin-top:0;">'))
+                .append($('<div style="margin:20px;">').html($('#comment').val())));
+              $('#comment').val('');
+              $('.star').each((index, element)=>{
+                    $(element).html('star_border');
+              });
+              chooseStars=0;
             }
           });
         }
       });
     }
   });
+}
+
+function buy(price, id){
+  var count = $('.seat.bay').length;
+  if(count == 0)
+    showLoginInfo('Выберете места для покупки билетов!');
+  else{
+    showCardInput(price*count, id);
+  }
 }
