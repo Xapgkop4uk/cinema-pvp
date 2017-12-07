@@ -277,6 +277,20 @@ function buyTickets(id)
     });
 }
 
+function returnTickets(id)
+{
+  $.each($('.bought.bay'), function(key, item) {
+    $.ajax({
+      url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+'/data/bulk/tickets?where=session%3D%27'+id+'%27%20AND%20row%3D'+$(item).data().row+'%20AND%20seat%3D'+$(item).data().seat,
+      type: "DELETE",
+      success: function(d){
+          $(item).removeClass('bought bay').addClass('seat');
+          $(item).click(false);
+      }
+    });
+  });
+}
+
 function postComment(movieId){
   var json={
     movie: movieId,

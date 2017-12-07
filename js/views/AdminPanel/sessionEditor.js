@@ -22,6 +22,7 @@ function drawSessionRedactor(section){
 function drawRemovingTickets(){
 
   var sessions ={};
+  var selectCat ={};
 
   $('.right').remove();
 
@@ -64,6 +65,10 @@ function drawRemovingTickets(){
         var currentSel = $(this).closest('.sel1');
         currentSel.children('.sel__placeholder').text(txt);
 
+        $('.sel2').remove();
+        $('.sel3').remove();
+        $('.placeDisables').remove();
+
         $.ajax({
           url:"https://api.backendless.com/"+APP_ID+"/"+API_KEY+"/data/session?where=time%3E"+parseInt(new Date().getTime()+18000)+"%20AND%20movie%3D'"+txt+"'&sortBy=time",
           type: "GET",
@@ -101,15 +106,57 @@ function drawRemovingTickets(){
               $(this).siblings('.sel__box__options').removeClass('selected');
               $(this).addClass('selected');
 
-              console.log(txt);
               var currentSel = $(this).closest('.sel2');
               currentSel.children('.sel__placeholder').text(txt);
+              console.log(sessions[txt]);
+              $('.sel3').remove();
+              $('.placeDisables').remove();
+
+
+              var select3 = $('<div class="sel sel3" style="margin:20px;">');
+              var selectBox3 = $('<div class="sel__box">');
+              var titleDate='';
+              var content='';
+
+              select3.append($('<span class="sel__placeholder" data-placeholder="Дата">Дата</span>'));
+
+
+              Object.keys(sessions[txt]).forEach((key)=>{
+                selectBox3.append($('<span class="sel__box__options sel-time">').html(sessions[txt][key].room+' зал: '+key));
+                selectCat[sessions[txt][key].room+' зал: '+key] = sessions[txt][key].objectId;
+
+                console.log(selectCat);
+              });
+
+              right.append(select3.append(selectBox3));
+
+
+              $('.sel3').click(function() {
+                $(this).toggleClass('active');
+              });
+
+              $('.sel-time').click(function() {
+                var txt = $(this).text();
+                var index = $(this).index();
+                $(this).siblings('.sel__box__options').removeClass('selected');
+                $(this).addClass('selected');
+
+                var currentSel = $(this).closest('.sel3');
+                currentSel.children('.sel__placeholder').text(txt);
+
+                $('.placeDisables').remove();
+
+                right.append($('<div class="placeDisables"><h3 style="color:black">Выбранный сеанс</h3><div class="AdminCinemaHall zal1"></div><button class="btn btn-admin" onclick="returnTickets(\''+selectCat[txt]+'\')" type="button" style="position:unset; right:unset; margin: 10px auto;">      <span>Снять бронь</span></button></div>'));
+
+                drawCinema(txt[0], selectCat[txt]);
+
+              });
             });
           }
+        });
       });
-    });
-  }
-});
+    }
+  });
 
   $('.layout').append(right);
 }
